@@ -127,4 +127,22 @@ public class StudentUtil {
         }
         return averageMarkAboveStudent;
     }
+
+    public static void sort(List<Integer> averageMark, List<String> subName) {
+
+        for (int i = 0; i < averageMark.size(); ++i) {
+            for (int j = i + 1; j < averageMark.size(); ++j) {
+                if (averageMark.get(i) < averageMark.get(j)) {
+                    int temp = averageMark.get(i);
+                    averageMark.set(i, averageMark.get(j));
+                    averageMark.set(j, temp);
+
+                    String str = subName.get(i);
+                    subName.set(i, subName.get(j));
+                    subName.set(j, str);
+                }
+            }
+        }
+    }
+
 }
