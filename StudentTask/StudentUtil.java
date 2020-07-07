@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Util {
+public class StudentUtil {
 
     public static Map<String, Integer> getRankBasedOnTotal(Student[] students) {
         boolean[] status = new boolean[students.length];

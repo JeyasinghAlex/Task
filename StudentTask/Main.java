@@ -49,13 +49,13 @@ public class Main {
 
     private static void showStudentsStatus(Student[] students) {
         boolean end = true;
-        Map<String, Integer> rankOrder = Util.getRankBasedOnTotal(students);
-        Map<String, Integer> subAverage = Util.getAverage(students);
-        Map<String, Map<String, Integer>> aboveAverageMarks = Util.getAboveAverageMarkStudents(students, subAverage);
-        Map<String, Map<String, Integer>> highestMarkStudents = Util.getHighestMarkStudentName(students);
+        Map<String, Integer> rankOrder = StudentUtil.getRankBasedOnTotal(students);
+        Map<String, Integer> subAverage = StudentUtil.getAverage(students);
+        Map<String, Map<String, Integer>> aboveAverageMarks = StudentUtil.getAboveAverageMarkStudents(students, subAverage);
+        Map<String, Map<String, Integer>> highestMarkStudents = StudentUtil.getHighestMarkStudentName(students);
+        Scanner scan = new Scanner(System.in);
         do {
             System.out.println("\n*------------------------------------------------*");
-            Scanner scan = new Scanner(System.in);
             System.out.println("1 ) Find top rank : ");
             System.out.println("2 ) Show each subject's average marks  : ");
             System.out.println("3 ) Show students with above-average marks : ");
