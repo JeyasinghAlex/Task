@@ -47,7 +47,14 @@ public class StudentUtil {
             }
         }
     }
-
+    public static int getStudentTotalMark(String studentName, Student[] students)  {
+        for (int i = 0; i < students.length; ++i) {
+            if (students[i].getName().equals(studentName)) {
+                return getTotalMark(students[i]);
+            }
+        }
+        return -1;
+    }
     private static int getTotalMark(Student student) {
         List<Subject> subjects = student.getSubjects();
         int totalMark = 0;
@@ -108,6 +115,7 @@ public class StudentUtil {
         int averageSocial = map.get(SubjectName.SOCIAL_SCIENCE.toString());
         Map<String, Integer> nameAndMark = new HashMap<>();
         Map<String, Map<String, Integer>> averageMarkAboveStudent = new HashMap<>();
+
         for (int i = 0; i < students[0].getSubjects().size(); ++i) {
             nameAndMark = new HashMap<>();
             for (int j = 0; j < students.length; ++j) {
@@ -129,7 +137,6 @@ public class StudentUtil {
     }
 
     public static void sort(List<Integer> averageMark, List<String> subName) {
-
         for (int i = 0; i < averageMark.size(); ++i) {
             for (int j = i + 1; j < averageMark.size(); ++j) {
                 if (averageMark.get(i) < averageMark.get(j)) {
@@ -145,4 +152,33 @@ public class StudentUtil {
         }
     }
 
+    public static Map<String, List<String>> getNumberOfSubjectAboveAverageMark(Student[] students, Map<String, Integer> subAverageMark) {
+        int averageTamil = subAverageMark.get(SubjectName.TAMIL.toString());
+        int averageEnglish = subAverageMark.get(SubjectName.ENGLISH.toString());
+        int averageMaths = subAverageMark.get(SubjectName.MATHS.toString());
+        int averageScience = subAverageMark.get(SubjectName.SCIENCE.toString());
+        int averageSocial = subAverageMark.get(SubjectName.SOCIAL_SCIENCE.toString());
+
+        Map<String, List<String>> numberOfAboveAverageMark = new HashMap<>();
+        List<String> subName = null;
+
+        for (int i = 0; i < students.length; ++i) {
+            subName = new ArrayList<>();
+            for (int j = 0; j < students[i].getSubjects().size(); ++j) {
+                if (students[i].getSubjects().get(j).getSubjectName().equals(SubjectName.TAMIL) && students[i].getSubjects().get(j).getMarks() > averageTamil) {
+                    subName.add(SubjectName.TAMIL.toString());
+                }else if (students[i].getSubjects().get(j).getSubjectName().equals(SubjectName.ENGLISH) && students[i].getSubjects().get(j).getMarks() > averageEnglish) {
+                    subName.add(SubjectName.ENGLISH.toString());
+                }else if (students[i].getSubjects().get(j).getSubjectName().equals(SubjectName.MATHS) && students[i].getSubjects().get(j).getMarks() > averageMaths) {
+                    subName.add(SubjectName.MATHS.toString());
+                }else if (students[i].getSubjects().get(j).getSubjectName().equals(SubjectName.SCIENCE) && students[i].getSubjects().get(j).getMarks() > averageScience) {
+                    subName.add(SubjectName.SCIENCE.toString());
+                }else if (students[i].getSubjects().get(j).getSubjectName().equals(SubjectName.SOCIAL_SCIENCE) && students[i].getSubjects().get(j).getMarks() > averageSocial) {
+                    subName.add(SubjectName.SOCIAL_SCIENCE.toString());
+                }
+            }
+            numberOfAboveAverageMark.put(students[i].getName(), subName);
+        }
+        return numberOfAboveAverageMark;
+    }
 }

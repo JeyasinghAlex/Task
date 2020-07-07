@@ -1,9 +1,6 @@
 package Task.StudentTask;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -49,17 +46,7 @@ public class Main {
 
     private static void showStudentsStatus(Student[] students, Scanner scan) {
         boolean end = true;
-        int maxRank = students.length;
-        Map<String, Integer> rankOrder = StudentUtil.getRankBasedOnTotal(students);
-        Map<String, Integer> subAverage = StudentUtil.getAverage(students);
-        Map<String, Map<String, Integer>> aboveAverageMarks = StudentUtil.getAboveAverageMarkStudents(students, subAverage);
-        Map<String, Map<String, Integer>> highestMarkStudents = StudentUtil.getHighestMarkStudentName(students);
-        List<Integer> averageMark = new ArrayList<>();
-        List<String> subName = new ArrayList<>();
-        List<Integer> rank = new ArrayList<>();
-        List<String> studentName = new ArrayList<>();
-        List<Integer> mark = new ArrayList<>();
-//        Scanner scan = new Scanner(System.in);
+
         do {
             System.out.println("\n*------------------------------------------------*");
             System.out.println("1 ) Find top rank : ");
@@ -67,27 +54,38 @@ public class Main {
             System.out.println("3 ) Show students with above-average marks : ");
             System.out.println("4 ) Show the top scorer for each subject : ");
             System.out.println("5 ) Show student details : ");
-            System.out.println("6 ) Exit program : ");
+            System.out.println("6 ) Show number of subject is higher then average mark with subject name: ");
+            System.out.println("7 ) Exit program : ");
             System.out.print("Enter your option - ");
             int option = scan.nextInt();
             switch (option) {
                 case 1:
-//                    for (int i = 1; i <= maxRank; ++i) {
-                        for (Map.Entry<String, Integer> entry : rankOrder.entrySet()) {
-//                            if (entry.getValue() == i) {
-//                                System.out.println(entry.getKey() + " ---> " + entry.getValue());
-//                            }
+                    List<Integer> rank = new ArrayList<>();
+                    List<String> studentName = new ArrayList<>();
+                    Map<String, Integer> rankOrder = StudentUtil.getRankBasedOnTotal(students);
+                    List<String> failedStudent = new ArrayList<>();
+                    for (Map.Entry<String, Integer> entry : rankOrder.entrySet()) {
                             studentName.add(entry.getKey());
                             rank.add(entry.getValue());
                         }
-//                    }
-//                    for (Map.Entry<String, Integer> entry : rankOrder.entrySet()) {
-//                        if (entry.getValue() == 0) {
-//                            System.out.println(entry.getKey() + " ---> " + entry.getValue());
-//                        }
-//                    }
+                        StudentUtil.sort(rank, studentName);
+                        for (int i = rank.size() - 1; i >= 0; --i) {
+                            if (rank.get(i) != 0) {
+                                int total = StudentUtil.getStudentTotalMark(studentName.get(i), students);
+                                System.out.println(studentName.get(i) + " -> " + total + " " + rank.get(i) + " -> PASS");
+                            } else {
+                                failedStudent.add(studentName.get(i));
+                            }
+                        }
+                        for (int i = 0; i < failedStudent.size(); ++i) {
+                            int total = StudentUtil.getStudentTotalMark(studentName.get(i), students);
+                            System.out.println(studentName.get(i) + " -> " + total + " " + rank.get(i) + " -> FAIL");
+                        }
                     break;
                 case 2:
+                    List<String> subName = new ArrayList<>();
+                    List<Integer> averageMark = new ArrayList<>();
+                    Map<String, Integer> subAverage = StudentUtil.getAverage(students);
                     for (Map.Entry<String, Integer> entry : subAverage.entrySet()) {
                         subName.add(entry.getKey());
                         averageMark.add(entry.getValue());
@@ -96,32 +94,28 @@ public class Main {
                     for (int i = 0; i < averageMark.size(); ++i) {
                         System.out.println("Average mark of  -> " + subName.get(i) + " - " + averageMark.get(i));
                     }
-//                    for (int i = 0; i < averageMark.size(); ++i) {
-//                        for (Map.Entry<String, Integer> entry : subAverage.entrySet()) {
-//                            if (averageMark.get(i).equals(entry.getValue())) {
-//                                System.out.println("Average mark " + entry.getKey() + " " + entry.getValue());
-//                            }
-//                        }
-//                    }
                     break;
                 case 3:
+                    List<Integer> stdMark = new ArrayList<>();
+                    List<String> stdName = new ArrayList<>();
+                    Map<String, Integer> average = StudentUtil.getAverage(students);
+                    Map<String, Map<String, Integer>> aboveAverageMarks = StudentUtil.getAboveAverageMarkStudents(students, average);
                     for (Map.Entry<String, Map<String, Integer>> entry : aboveAverageMarks.entrySet()) {
-                        mark = new ArrayList<>();
+                        stdMark = new ArrayList<>();
+                        stdName = new ArrayList<>();
                         System.out.println("------  " + entry.getKey() + "  highest mark ------");
                         for (Map.Entry<String, Integer> innerEntry : entry.getValue().entrySet()) {
-                            mark.add(innerEntry.getValue());
+                            stdName.add(innerEntry.getKey());
+                            stdMark.add(innerEntry.getValue());
                         }
-                        sort(mark);
-                        for (int i = 0; i < mark.size(); ++i) {
-                            for (Map.Entry<String, Integer> innerEntry : entry.getValue().entrySet()) {
-                                if (mark.get(i).equals(innerEntry.getValue())) {
-                                    System.out.println(innerEntry.getKey() + " " + innerEntry.getValue());
-                                }
-                            }
+                        StudentUtil.sort(stdMark, stdName);
+                        for (int i = 0; i < stdMark.size(); ++i) {
+                            System.out.println(stdName.get(i) + " - " + stdMark.get(i));
                         }
                     }
                     break;
                 case 4:
+                    Map<String, Map<String, Integer>> highestMarkStudents = StudentUtil.getHighestMarkStudentName(students);
                     for (Map.Entry<String, Map<String, Integer>> entry : highestMarkStudents.entrySet()) {
                         System.out.println("----------  " + entry.getKey() + "  ----------");
                         for (Map.Entry<String, Integer> innerEntry : entry.getValue().entrySet()) {
@@ -133,6 +127,15 @@ public class Main {
                     getStudentDetails(students);
                     break;
                 case 6:
+                    Map<String, Integer> avrg = StudentUtil.getAverage(students);
+                    Map<String, List<String>> numberOfAboveAverageMark = StudentUtil.getNumberOfSubjectAboveAverageMark(students, avrg);
+                    System.out.println("--------------------------------------------------");
+                    for (Map.Entry<String, List<String>> entry : numberOfAboveAverageMark.entrySet()) {
+                        System.out.println(entry.getKey() + " " + entry.getValue() + " - " + entry.getValue().size());
+                    }
+                    System.out.println("--------------------------------------------------");
+                    break;
+                case 7:
                     end = false;
                 default:
                     System.out.println("Please enter the correct option :- ");
@@ -149,18 +152,6 @@ public class Main {
                 String name = students[j].getName();
                 String status = students[j].getSubjects().get(i).getMarks() >= 35 ? "PASS" : "FAIL";
                     System.out.println("|          | " + name + "          |" + status + "          |");
-            }
-        }
-    }
-
-    private static void sort(List<Integer> averageMark) {
-        for  (int i = 0; i < averageMark.size(); ++i) {
-            for (int j = i + 1; j < averageMark.size(); ++j) {
-                if (averageMark.get(i) < averageMark.get(j)) {
-                    int temp = averageMark.get(i);
-                    averageMark.set(i, averageMark.get(j));
-                    averageMark.set(j, temp);
-                }
             }
         }
     }
