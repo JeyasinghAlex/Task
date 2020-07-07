@@ -44,38 +44,39 @@ public class Main {
             student.setSubjects(subjects);
             students[i] = student;
         }
-        studentsStatus(students);
+        showStudentsStatus(students);
     }
 
-    private static void studentsStatus(Student[] students) {
+    private static void showStudentsStatus(Student[] students) {
         boolean end = true;
         Map<String, Integer> rankOrder = Util.getRankBasedOnTotal(students);
         Map<String, Integer> subAverage = Util.getAverage(students);
         Map<String, Map<String, Integer>> aboveAverageMarks = Util.getAboveAverageMarkStudents(students, subAverage);
         Map<String, Map<String, Integer>> highestMarkStudents = Util.getHighestMarkStudentName(students);
         do {
+            System.out.println("\n*------------------------------------------------*");
             Scanner scan = new Scanner(System.in);
             System.out.println("1 ) Find top rank : ");
-            System.out.println("2 ) Average mark each subject  : ");
-            System.out.println("3 ) Student name above average mark  each subject : ");
-            System.out.println("4 ) Student name highest mark each subject : ");
+            System.out.println("2 ) Show each subject's average marks  : ");
+            System.out.println("3 ) Show students with above-average marks : ");
+            System.out.println("4 ) Show the top scorer for each subject : ");
             System.out.println("5 ) Exit program : ");
             System.out.print("Enter your option - ");
             int option = scan.nextInt();
             switch (option) {
                 case 1:
                     for (Map.Entry<String, Integer> entry : rankOrder.entrySet()) {
-                        System.out.println(entry.getKey() + " " + entry.getValue());
+                        System.out.println(entry.getKey() + " ---> " + entry.getValue());
                     }
                     break;
                 case 2:
                     for (Map.Entry<String, Integer> entry : subAverage.entrySet()) {
-                        System.out.println(entry.getKey() + " " + entry.getValue());
+                        System.out.println("Average mark " + entry.getKey() + " " + entry.getValue());
                     }
                     break;
                 case 3:
                     for (Map.Entry<String, Map<String, Integer>> entry : aboveAverageMarks.entrySet()) {
-                        System.out.println(entry.getKey());
+                        System.out.println("------  " + entry.getKey() + "  highest mak ------");
                         for (Map.Entry<String, Integer> innerEntry : entry.getValue().entrySet()) {
                             System.out.println(innerEntry.getKey() + " " + innerEntry.getValue());
                         }
@@ -83,7 +84,7 @@ public class Main {
                     break;
                 case 4:
                     for (Map.Entry<String, Map<String, Integer>> entry : highestMarkStudents.entrySet()) {
-                        System.out.println(entry.getKey());
+                        System.out.println("----------  " + entry.getKey() + "  ----------");
                         for (Map.Entry<String, Integer> innerEntry : entry.getValue().entrySet()) {
                             System.out.println(innerEntry.getKey() + " " + innerEntry.getValue());
                         }

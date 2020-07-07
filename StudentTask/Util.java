@@ -85,7 +85,6 @@ public class Util {
         Map<String, Map<String, Integer>> highestMark = new HashMap<>();
         Map<String, Integer> studentName = new HashMap<>();
         String name = "";
-        int mark = 0;
         for (int i = 0; i < students[0].getSubjects().size(); ++i) {
             studentName = new HashMap<>();
             max = Integer.MIN_VALUE;
