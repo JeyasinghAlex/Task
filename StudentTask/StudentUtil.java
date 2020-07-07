@@ -27,6 +27,8 @@ public class StudentUtil {
             } else if (status[i]) {
                 map.put(students[i].getName(), ++rank);
                 list.add(getTotalMark(students[i]));
+            }else {
+                map.put(students[i].getName(), 0);
             }
         }
         return map;
