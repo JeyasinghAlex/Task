@@ -20,13 +20,18 @@ public class StudentUtil {
     private static Map<String, Integer> setRank(Student[] students, boolean[] status) {
         Map<String, Integer> map = new HashMap<>();
         List<Integer> list = new ArrayList<>();
+        Map<Integer, Integer> topRank = new HashMap<>();
         int rank = 0;
+        int count = 0;
         for (int i = 0; i < students.length; ++i) {
             if (status[i] && list.contains(getTotalMark(students[i]))) {
                 map.put(students[i].getName(), rank);
+                count++;
             } else if (status[i]) {
-                map.put(students[i].getName(), ++rank);
+                rank = ++rank + count;
+                map.put(students[i].getName(), rank);
                 list.add(getTotalMark(students[i]));
+                count = 0;
             }else {
                 map.put(students[i].getName(), 0);
             }
