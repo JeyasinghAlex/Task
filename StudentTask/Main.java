@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
 
-    public static void mainn(String[] args) {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.format("%-35s%-1c%-1c", "Enter the number of students ", ':',' ');
         int numberOfStudent = getIntegerInput(scan);
@@ -57,7 +57,7 @@ public class Main {
             System.out.println("6 ) Show number of subject is higher then average mark with subject name: ");
             System.out.println("7 ) Exit program : ");
             System.out.print("Enter your option - ");
-            int option = getIntegerInput(scan);;
+            int option = scan.nextInt();
             System.out.println("Your enter option is - " + option);
             switch (option) {
                 case 1:
@@ -99,13 +99,18 @@ public class Main {
     }
 
     private static void showTopScoreEachSubject(Student[] students) {
-        Map<String, Map<String, Integer>> highestMarkStudents = StudentUtil.getHighestMarkStudentName(students);
-        for (Map.Entry<String, Map<String, Integer>> entry : highestMarkStudents.entrySet()) {
+        Map<String, Map<List<String>, List<Integer>>> highestMarkStudents = StudentUtil.getHighestMarkStudentName(students);
+        for (Map.Entry<String, Map<List<String>, List<Integer>>> entry: highestMarkStudents.entrySet()) {
             System.out.println(entry.getKey() + ": ");
             System.out.println("-----------------------------");
-            for (Map.Entry<String, Integer> innerEntry : entry.getValue().entrySet()) {
-                System.out.format("%1c%-20s%1c%4d%2s%1c",'|',innerEntry.getKey(),'|', innerEntry.getValue(), "", '|');
-                System.out.println();
+            for (Map.Entry<List<String>, List<Integer>> innerEntry : entry.getValue().entrySet()) {
+                int max = innerEntry.getValue().get(0);
+                for (int i = 0; i < innerEntry.getValue().size(); ++i) {
+                    if (max == innerEntry.getValue().get(i)) {
+                        System.out.format("%1c%-20s%1c%4d%2s%1c",'|',innerEntry.getKey().get(i),'|', innerEntry.getValue().get(i), "", '|');
+                        System.out.println();
+                    }
+                }
             }
             System.out.println("-----------------------------");
         }
@@ -217,14 +222,10 @@ public class Main {
                 break;
             }
             catch (InputMismatchException e) {
-                System.out.println("Invalid Input, shoot again:");
+                System.out.println("Invalid Input, Please enter again:");
                 scan.nextLine();
             }
         }
         return input;
-    }
-
-    private static String getStringInput(Scanner  scan) {
-        return scan.nextLine();
     }
 }

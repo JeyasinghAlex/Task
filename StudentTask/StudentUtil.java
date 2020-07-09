@@ -94,11 +94,34 @@ public class StudentUtil {
         return map;
     }
 
-    public static Map<String, Map<String, Integer>> getHighestMarkStudentName(Student[] students) {
+    public static  Map<String, Map<List<String>, List<Integer>>> getHighestMarkStudentName(Student[] students) {
         int max = Integer.MIN_VALUE;
         Map<String, Map<String, Integer>> highestMark = new HashMap<>();
         Map<String, Integer> studentName = new HashMap<>();
         String name = "";
+        /*-------------------------------------------------------------------------------*/
+        Map<String, Map<List<String>, List<Integer>>> map = new HashMap<>();
+        Map<List<String>, List<Integer>> innerMap = new HashMap<>();
+        List<String> stdName = new ArrayList<>();
+        List<Integer> stdMark = new ArrayList<>();
+
+            for (int i = 0; i < students[0].getSubjects().size(); ++i) {
+                stdName = new ArrayList<>();
+                stdMark = new ArrayList<>();
+                innerMap = new HashMap<>();
+                for (int j = 0; j < students.length; ++j) {
+                    for (int k = 0; k < students[j].getSubjects().size(); ++k) {
+                        if (students[0].getSubjects().get(i).getSubjectName().equals(students[j].getSubjects().get(k).getSubjectName())) {
+                            stdName.add(students[j].getName());
+                            stdMark.add(students[j].getSubjects().get(k).getMarks());
+                        }
+                    }
+                }
+                sort(stdMark, stdName);
+                innerMap.put(stdName, stdMark);
+                map.put(students[0].getSubjects().get(i).getSubjectName().toString(), innerMap);
+            }
+        /*-------------------------------------------------------------------------------*/
         for (int i = 0; i < students[0].getSubjects().size(); ++i) {
             studentName = new HashMap<>();
             max = Integer.MIN_VALUE;
@@ -111,7 +134,7 @@ public class StudentUtil {
             studentName.put(name, max);
             highestMark.put(students[0].getSubjects().get(i).getSubjectName().toString(), studentName);
         }
-        return highestMark;
+        return map;
     }
 
     public static Map<String, Map<String, Integer>> getAboveAverageMarkStudents(Student[] students, Map<String, Integer> map) {
