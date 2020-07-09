@@ -43,10 +43,11 @@ public class DemoDao {
             student.setSubjects(subjects);
             StudentApi.getInstance().insertStudent(student);
         }
-        showStudentsStatus(scan);
+        showStudentsStatus();
     }
 
-    private static void showStudentsStatus(Scanner scan) {
+    private static void showStudentsStatus() {
+        Scanner scan = new Scanner(System.in);
         boolean end = true;
         do {
             System.out.println("\n*------------------------------------------------*");
