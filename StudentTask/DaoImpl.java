@@ -13,7 +13,7 @@ public class DaoImpl {
             Properties properties = ConfigUtil.loadProperty();
             String url = properties.getProperty("mysql.CONNECTION_URL");
             String userName = properties.getProperty("mysql.username");
-            String password = properties.getProperty("mysql.passwork");
+            String password = properties.getProperty("mysql.password");
             String driverName = properties.getProperty("mysql.CONNECTION_DRIVER");
             Class.forName(driverName);
             connection = DriverManager.getConnection(url, userName, password);
@@ -107,6 +107,7 @@ public class DaoImpl {
         Map<List<String>, List<Integer>> innerMap = new HashMap<>();
         PreparedStatement pstmt = connection.prepareStatement(subjectsNameQuery);
         ResultSet resultSet = pstmt.executeQuery();
+
         while (resultSet.next()) {
             name = new ArrayList<>();
             mark = new ArrayList<>();
@@ -165,12 +166,14 @@ public class DaoImpl {
         Properties properties = ConfigUtil.loadProperty();
         String studentStatus = properties.getProperty("mysql.query.get_student_status");
         String subjectsNameQuery = properties.getProperty("mysql.query.get_subjects_name");
+
         Map<String, Map<List<String>, List<Integer>>> status = new HashMap<>();
         Map<List<String>, List<Integer>> innerMap = new HashMap<>();
         List<String> name = new ArrayList<>();
         List<Integer> mark = new ArrayList<>();
         PreparedStatement pstmt = connection.prepareStatement(subjectsNameQuery);
         ResultSet subjectsName = pstmt.executeQuery();
+
         while (subjectsName.next()) {
             innerMap = new HashMap<>();
             name = new ArrayList<>();

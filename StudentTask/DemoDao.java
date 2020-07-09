@@ -10,35 +10,34 @@ public class DemoDao {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.format("%-35s%-1c%-1c", "Enter the number of students ", ':', ' ');
-        int numberOfStudent = getIntegerInput(scan);
+        int numberOfStudent = getIntegerInput();
         List<Subject> subjects = null;
 
         for (int i = 0; i < numberOfStudent; ++i) {
             subjects = new ArrayList<>();
             System.out.format("%-35s%-1c%-1c", "Enter the student " + (i + 1) + " name", ':', ' ');
-            scan.nextLine();
             String name = scan.nextLine();
             Student student = new Student(name);
             System.out.println("For student " + (i + 1));
 
             System.out.format("%5s%-30s%-1c%-1c", "", "Enter the Tamil mark ", ':', ' ');
-            int tamil = getIntegerInput(scan);
+            int tamil = getIntegerInput();
             subjects.add(new Subject(SubjectName.TAMIL, tamil));
 
             System.out.format("%5s%-30s%-1c%-1c", "", "Enter the English mark ", ':', ' ');
-            int english = getIntegerInput(scan);
+            int english = getIntegerInput();
             subjects.add(new Subject(SubjectName.ENGLISH, english));
 
             System.out.format("%5s%-30s%-1c%-1c", "", "Enter the Maths mark ", ':', ' ');
-            int maths = getIntegerInput(scan);
+            int maths = getIntegerInput();
             subjects.add(new Subject(SubjectName.MATHS, maths));
 
             System.out.format("%5s%-30s%-1c%-1c", "", "Enter the Science mark ", ':', ' ');
-            int science = getIntegerInput(scan);
+            int science = getIntegerInput();
             subjects.add(new Subject(SubjectName.SCIENCE, science));
 
             System.out.format("%5s%-30s%-1c%-1c", "", "Enter the Social Science mark ", ':', ' ');
-            int socialScience = getIntegerInput(scan);
+            int socialScience = getIntegerInput();
             subjects.add(new Subject(SubjectName.SOCIAL_SCIENCE, socialScience));
 
             student.setSubjects(subjects);
@@ -59,8 +58,7 @@ public class DemoDao {
             System.out.println("6 ) Show number of subject is higher then average mark with subject name: ");
             System.out.println("7 ) Exit program : ");
             System.out.print("Enter your option - ");
-            int option = getIntegerInput(scan);
-            ;
+            int option = getIntegerInput();
             System.out.println("Your enter option is - " + option);
             switch (option) {
                 case 1:
@@ -90,8 +88,8 @@ public class DemoDao {
         } while (end);
     }
 
-
-    private static int getIntegerInput(Scanner scan) {
+    private static int getIntegerInput() {
+        Scanner scan = new Scanner(System.in);
         int input = 0;
         while (true) {
             try {
