@@ -1,8 +1,5 @@
 package Task.StudentTask;
 
-import LeetCodeChallenges.LeetCodeJun.ClimbingStairs;
-import LeetCodeChallenges.LeetCodeMay.SquaresOfSortedArray;
-
 import java.sql.*;
 import java.util.*;
 
