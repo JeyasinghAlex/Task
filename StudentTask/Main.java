@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void mainn(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.format("%-35s%-1c%-1c", "Enter the number of students ", ':',' ');
         int numberOfStudent = getIntegerInput(scan);
