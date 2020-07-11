@@ -1,27 +1,38 @@
 package Task.TicketBookingManagement.Model;
 
 import Task.TicketBookingManagement.Enum.AccountType;
+import Task.TicketBookingManagement.Enum.TransactionType;
 import Task.TicketBookingManagement.Utils.BankConstants;
-
-import java.util.List;
 
 public class SavingAccount extends Account {
 
-    private static final int MINIMUM_BALANCE = BankConstants.SAVING_ACCOUNT_MINIMUM_BALANCE;
-    private static final int INTEREST_RATE = BankConstants.SAVING_ACCOUNT_INTEREST;
+    public static final int PROCESSING_PERCENTAGE = BankConstants.SAVING_PROCESSING_PERCENTAGE;
 
-//    @Override
-//    public int getMinimumBalance() {
-//        return MINIMUM_BALANCE;
-//    }
-//
-//    @Override
-//    public int getInterestRate() {
-//        return INTEREST_RATE;
-//    }
+    @Override
+    public boolean withdraw(int amount) {
+        return ((TransactionHandler) amt -> {
+            return amt * PROCESSING_PERCENTAGE / 100;
+        }).transactionProcess(this, amount, TransactionType.WITH_DRAW);
+    }
+
+    @Override
+    public boolean deposit(int amount) {
+        return  ((TransactionHandler) amt -> {
+            return amt * PROCESSING_PERCENTAGE / 100;
+        }).transactionProcess(this, amount, TransactionType.DEPOSIT);
+    }
 
     @Override
     public AccountType getType() {
         return AccountType.SAVING;
     }
+
+    @Override
+    public boolean transfer(Account to, int amount) {
+        return ((TransactionHandler) amt -> {
+            return amt * PROCESSING_PERCENTAGE / 100;
+        }).transactionProcess(this, to, amount, TransactionType.TRANSFER);
+    }
 }
+
+
