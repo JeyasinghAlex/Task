@@ -1,6 +1,6 @@
-package Task.TicketBookingManagement.Model;
+package Task.Tranaction.model;
 
-import Task.TicketBookingManagement.Enum.TransactionType;
+import Task.Tranaction.enums.TransactionType;
 
 public class Transaction {
 
@@ -10,6 +10,9 @@ public class Transaction {
     private TransactionType type;
     private String description;
 
+    public Transaction(){
+
+    }
     public Transaction(Account from, Account to, int amount, TransactionType type, String description) {
         this.from = from;
         this.to = to;
@@ -29,40 +32,45 @@ public class Transaction {
         return from;
     }
 
-    public void setFrom(Account from) {
+    public Transaction setFrom(Account from) {
         this.from = from;
+        return this;
     }
 
     public Account getTo() {
         return to;
     }
 
-    public void setTo(Account to) {
+    public Transaction setTo(Account to) {
         this.to = to;
+        return this;
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public Transaction setAmount(int amount) {
         this.amount = amount;
+        return this;
     }
 
     public TransactionType getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
+    public Transaction setType(TransactionType type) {
         this.type = type;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Transaction setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     @Override

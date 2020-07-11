@@ -1,8 +1,7 @@
-package Task.TicketBookingManagement.Model;
+package Task.Tranaction.model;
 
-import Task.TicketBookingManagement.Enum.AccountType;
-import Task.TicketBookingManagement.Enum.TransactionType;
-import Task.TicketBookingManagement.Utils.BankConstants;
+import Task.Tranaction.enums.AccountType;
+import Task.Tranaction.utils.BankConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public abstract class Account {
         this.interestRate = interestRate;
     }
 
-    public void setTransactions(Transaction transaction) {
+    public void addTransactions(Transaction transaction) {
         if (transactions == null) {
             transactions = new ArrayList<>();
         }

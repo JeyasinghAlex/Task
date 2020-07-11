@@ -1,8 +1,8 @@
-package Task.TicketBookingManagement.Model;
+package Task.Tranaction.model;
 
-import Task.TicketBookingManagement.Enum.AccountType;
-import Task.TicketBookingManagement.Enum.TransactionType;
-import Task.TicketBookingManagement.Utils.BankConstants;
+import Task.Tranaction.enums.AccountType;
+import Task.Tranaction.enums.TransactionType;
+import Task.Tranaction.utils.BankConstants;
 
 public class BusinessAccount extends Account {
 
@@ -10,14 +10,16 @@ public class BusinessAccount extends Account {
 
     @Override
     public boolean withdraw(int amount) {
-      return   ((TransactionHandler) amt -> {
-          return amt * PROCESSING_PERCENTAGE / 100;
-            }).transactionProcess(this, amount, TransactionType.WITH_DRAW);
+        Transaction transaction = new Transaction();
+        transaction = transaction.setFrom(this).setType(TransactionType.WITH_DRAW).setAmount(amount);
+        return ((TransactionHandler) amt -> {
+            return amt * PROCESSING_PERCENTAGE / 100;
+        }).transactionProcess(transaction);
     }
 
     @Override
     public boolean deposit(int amount) {
-        return  ((TransactionHandler) amt -> {
+        return ((TransactionHandler) amt -> {
             return amt * PROCESSING_PERCENTAGE / 100;
         }).transactionProcess(this, amount, TransactionType.DEPOSIT);
     }
@@ -29,7 +31,7 @@ public class BusinessAccount extends Account {
 
     @Override
     public boolean transfer(Account to, int amount) {
-        return  ((TransactionHandler) amt -> {
+        return ((TransactionHandler) amt -> {
             return amt * PROCESSING_PERCENTAGE / 100;
         }).transactionProcess(this, to, amount, TransactionType.TRANSFER);
     }

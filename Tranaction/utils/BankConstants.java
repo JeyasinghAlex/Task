@@ -1,4 +1,4 @@
-package Task.TicketBookingManagement.Utils;
+package Task.Tranaction.utils;
 
 public class BankConstants {
 

@@ -1,4 +1,4 @@
-package Task.TicketBookingManagement.Model;
+package Task.Tranaction.model;
 
 import java.util.ArrayList;
 import java.util.List;

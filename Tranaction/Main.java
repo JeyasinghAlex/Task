@@ -1,11 +1,10 @@
-package Task.TicketBookingManagement;
+package Task.Tranaction;
 
-import Task.TicketBookingManagement.BankException.BankException;
-import Task.TicketBookingManagement.Enum.AccountType;
-import Task.TicketBookingManagement.Model.Account;
-import Task.TicketBookingManagement.Model.Branch;
-import Task.TicketBookingManagement.Model.Customer;
-import Task.TicketBookingManagement.Model.Transaction;
+import Task.Tranaction.enums.AccountType;
+import Task.Tranaction.model.Account;
+import Task.Tranaction.model.Branch;
+import Task.Tranaction.model.Customer;
+import Task.Tranaction.model.Transaction;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,13 +14,13 @@ public class Main {
     private Scanner scan = new Scanner(System.in);
     private Branch branch = new Branch();
 
-    public static void main(String[] args) throws BankException {
+    public static void main(String[] args)  {
         System.out.println("Welcome to bank website :- ");
         new Main().indexPage();
     }
 
 
-    public void indexPage() throws BankException {
+    public void indexPage()  {
         boolean isEnd = true;
         do {
             System.out.println();
@@ -81,7 +80,7 @@ public class Main {
         }
     }
 
-    public void showUserOption() throws BankException {
+    public void showUserOption()  {
         System.out.println();
         System.out.println("1 ) Create Account :- ");
         System.out.println("2 ) Balance Enquiry :- ");
@@ -162,6 +161,7 @@ public class Main {
                 }
                 break;
             default:
+                System.out.println("Please enter the valid input :");
                 break;
         }
         indexPage();

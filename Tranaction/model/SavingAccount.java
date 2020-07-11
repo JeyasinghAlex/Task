@@ -1,8 +1,8 @@
-package Task.TicketBookingManagement.Model;
+package Task.Tranaction.model;
 
-import Task.TicketBookingManagement.Enum.AccountType;
-import Task.TicketBookingManagement.Enum.TransactionType;
-import Task.TicketBookingManagement.Utils.BankConstants;
+import Task.Tranaction.enums.AccountType;
+import Task.Tranaction.enums.TransactionType;
+import Task.Tranaction.utils.BankConstants;
 
 public class SavingAccount extends Account {
 

@@ -1,8 +1,7 @@
-package Task.TicketBookingManagement.Model;
+package Task.Tranaction.model;
 
-import Task.TicketBookingManagement.BankException.BankException;
-import Task.TicketBookingManagement.Enum.AccountType;
-import Task.TicketBookingManagement.Utils.BankConstants;
+import Task.Tranaction.enums.AccountType;
+import Task.Tranaction.utils.BankConstants;
 
 import java.util.ArrayList;
 import java.util.List;
