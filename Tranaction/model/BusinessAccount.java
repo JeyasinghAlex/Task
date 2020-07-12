@@ -6,22 +6,37 @@ import Task.Tranaction.utils.BankConstants;
 
 public class BusinessAccount extends Account {
 
-    public static final int PROCESSING_PERCENTAGE = BankConstants.BUSINESS_PROCESSING_PERCENTAGE;
+    private static int debitProcessingPercentage = BranchConstants.BUSINESS_DEBIT_PROCESSING_PERCENTAGE;
+    private static int creditProcessingPercentage = BranchConstants.BUSINESS_CREDIT_PROCESSING_PERCENTAGE;
 
     @Override
-    public boolean withdraw(int amount) {
-        Transaction transaction = new Transaction();
-        transaction = transaction.setFrom(this).setType(TransactionType.WITH_DRAW).setAmount(amount);
+    public Transaction withdraw(int amount) {
+        Transaction transaction = new Transaction.Builder().from(this).amount(amount).type(TransactionType.WITH_DRAW).build();
         return ((TransactionHandler) amt -> {
-            return amt * PROCESSING_PERCENTAGE / 100;
-        }).transactionProcess(transaction);
+            int count = 0;
+            for (int i = 0; i < this.getEntries().size(); ++i) {
+                if (this.getEntries().get(i).getTransaction().getType().equals(TransactionType.WITH_DRAW))
+                    count++;
+            }
+            if (count >= 5)
+                debitProcessingPercentage = (count + debitProcessingPercentage) / 2;
+            return amt * debitProcessingPercentage / 100;
+        }).processTransaction(transaction);
     }
 
     @Override
-    public boolean deposit(int amount) {
+    public Transaction deposit(int amount) {
+        Transaction transaction = new Transaction.Builder().from(this).amount(amount).type(TransactionType.DEPOSIT).build();
         return ((TransactionHandler) amt -> {
-            return amt * PROCESSING_PERCENTAGE / 100;
-        }).transactionProcess(this, amount, TransactionType.DEPOSIT);
+            int count = 0;
+            for (int i = 0; i < this.getEntries().size(); ++i) {
+                if (this.getEntries().get(i).getTransaction().getType().equals(TransactionType.DEPOSIT))
+                    count++;
+            }
+            if (count >= 5)
+                creditProcessingPercentage = (count + creditProcessingPercentage / 2) / 2;
+            return amt * creditProcessingPercentage / 100;
+        }).processTransaction(transaction);
     }
 
     @Override
@@ -29,11 +44,11 @@ public class BusinessAccount extends Account {
         return AccountType.BUSINESS;
     }
 
-    @Override
-    public boolean transfer(Account to, int amount) {
-        return ((TransactionHandler) amt -> {
-            return amt * PROCESSING_PERCENTAGE / 100;
-        }).transactionProcess(this, to, amount, TransactionType.TRANSFER);
-    }
+//    @Override
+//    public boolean transfer(Account to, int amount) {
+//        return ((TransactionHandler) amt -> {
+//            return amt * DEBIT_PROCESSING_PERCENTAGE / 100;
+//        }).processTransaction(this, to, amount, TransactionType.TRANSFER);
+//    }
 }
 

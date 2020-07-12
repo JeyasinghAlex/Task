@@ -1,6 +1,7 @@
 package Task.Tranaction.model;
 
 import Task.Tranaction.enums.AccountType;
+import Task.Tranaction.enums.TransactionType;
 import Task.Tranaction.utils.BankConstants;
 
 import java.util.ArrayList;
@@ -11,6 +12,14 @@ public class Branch {
     private List<Account> accounts;
     private List<Customer> customers;
 
+
+    public String getIfsc() {
+        return ifsc;
+    }
+
+    public void setIfsc(String ifsc) {
+        this.ifsc = ifsc;
+    }
 
     private void addAccounts(Account account) {
         if (accounts == null) {
@@ -34,27 +43,31 @@ public class Branch {
         Account newAccount = null;
         if (accountType.equals(AccountType.SAVING.toString())) {
             newAccount = new SavingAccount();
-            newAccount.setMinimumBalance(BankConstants.SAVING_ACCOUNT_MINIMUM_BALANCE);
-            newAccount.setInterestRate(BankConstants.SAVING_ACCOUNT_INTEREST);
-        } else if(accountType.equals(AccountType.JOIN.toString())) {
-            newAccount = new JoinAccount();
-            newAccount.setMinimumBalance(BankConstants.JOIN_ACCOUNT_MINIMUM_BALANCE);
-            newAccount.setInterestRate(BankConstants.JOIN_ACCOUNT_INTEREST);
-        }  else {
+            newAccount.setMinimumBalance(BranchConstants.SAVING_ACCOUNT_MINIMUM_BALANCE);
+            newAccount.setInterestRate(BranchConstants.SAVING_ACCOUNT_INTEREST);
+        } else if (accountType.equals(AccountType.JOIN.toString())) {
+            newAccount = new JointAccount();
+            newAccount.setMinimumBalance(BranchConstants.JOIN_ACCOUNT_MINIMUM_BALANCE);
+            newAccount.setInterestRate(BranchConstants.JOIN_ACCOUNT_INTEREST);
+        } else {
             newAccount = new BusinessAccount();
-            newAccount.setMinimumBalance(BankConstants.BUSINESS_ACCOUNT_MINIMUM_BALANCE);
-            newAccount.setInterestRate(BankConstants.BUSINESS_ACCOUNT_INTEREST);
+            newAccount.setMinimumBalance(BranchConstants.BUSINESS_ACCOUNT_MINIMUM_BALANCE);
+            newAccount.setInterestRate(BranchConstants.BUSINESS_ACCOUNT_INTEREST);
         }
-        String accountNumber = BankConstants.BANK_ACCOUNT_NUMBER_PREFIX + panNumber;
+        String accountNumber = BranchConstants.BANK_ACCOUNT_NUMBER_PREFIX + panNumber;
         newAccount.setAccountNumber(accountNumber);
         newAccount.setAvailableBalance(amount);
-
+        String transactionId = BranchConstants.DEPOSIT_OPERATION + TransactionHandler.TRANSACTION_ID_GENERATOR.incrementAndGet();
+        Transaction transaction = new Transaction.Builder().from(newAccount).amount(amount).type(TransactionType.DEPOSIT).build();
+        Entry entry = new Entry(transactionId, transaction);
+        newAccount.addEntry(entry);
 
         Customer alreadyCustomer = customerPresentWithPanNumber(panNumber);
 
         if (alreadyCustomer != null) {
             alreadyCustomer.addAccounts(newAccount);
         } else {
+            System.out.println("* -----  Customer is already present with the pan number, added another account  ----- *");
             Customer newCustomer = new Customer();
             newCustomer.setPanNumber(panNumber);
             newCustomer.addAccounts(newAccount);
@@ -64,7 +77,7 @@ public class Branch {
         return accountNumber;
     }
 
-    public Account getAccount(String accountNumber)  {
+    public Account getAccount(String accountNumber) {
         for (Account account : accounts) {
             if (account.getAccountNumber().equals(accountNumber)) {
                 return account;
@@ -73,13 +86,13 @@ public class Branch {
         return null;
     }
 
-    public Customer getCustomerByPanNumber(String panNumber)  {
+    public Customer getCustomerByPanNumber(String panNumber) {
         for (Customer customer : customers) {
             if (customer.getPanNumber().equals(panNumber)) {
                 return customer;
             }
         }
-       return null;
+        return null;
     }
 
     private Customer customerPresentWithPanNumber(String panNumber) {

@@ -3,10 +3,10 @@ package Task.Tranaction.model;
 import Task.Tranaction.enums.AccountType;
 import Task.Tranaction.enums.TransactionType;
 
-public class SavingAccount extends Account {
+public class JointAccount extends Account {
 
-    private static int debitProcessingPercentage = BranchConstants.SAVING_DEBIT_PROCESSING_PERCENTAGE;
-    private static int creditProcessingPercentage = BranchConstants.SAVING_CREDIT_PROCESSING_PERCENTAGE;
+    private static int debitProcessingPercentage = BranchConstants.JOIN_DEBIT_PROCESSING_PERCENTAGE;
+    private static int creditProcessingPercentage = BranchConstants.JOIN_CREDIT_PROCESSING_PERCENTAGE;
 
     @Override
     public Transaction withdraw(int amount) {
@@ -40,15 +40,6 @@ public class SavingAccount extends Account {
 
     @Override
     public AccountType getType() {
-        return AccountType.SAVING;
+        return AccountType.JOIN;
     }
-
-//    @Override
-//    public boolean transfer(Account to, int amount) {
-//        return ((TransactionHandler) amt -> {
-//            return amt * DEBIT_PROCESSING_PERCENTAGE / 100;
-//        }).processTransaction(this, to, amount, TransactionType.TRANSFER);
-//    }
 }
-
-

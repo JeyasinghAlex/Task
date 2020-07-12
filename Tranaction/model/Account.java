@@ -12,7 +12,7 @@ public abstract class Account {
     private int minimumBalance;
     private int availableBalance;
     private int interestRate;
-    private List<Transaction> transactions;
+    private List<Entry> entries;
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
@@ -46,57 +46,42 @@ public abstract class Account {
         this.interestRate = interestRate;
     }
 
-    public void addTransactions(Transaction transaction) {
-        if (transactions == null) {
-            transactions = new ArrayList<>();
+    public void addEntry(Entry entry) {
+        if (entries == null) {
+            entries = new ArrayList<>();
         }
-        this.transactions.add(transaction);
+        this.entries.add(entry);
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
+    public List<Entry> getEntries() {
+        return entries;
     }
 
-    public boolean transactionProcess(Account account, int transferAmount) {
-        if (this.withdraw(transferAmount)) {
-            if (account.deposit(transferAmount)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<Transaction> getMiniStatement() {
-        List<Transaction> miniStatement = new ArrayList<>();
+    public List<Entry> getMiniStatement() {
+        List<Entry> miniStatement = new ArrayList<>();
         int count = 0;
-        ListIterator<Transaction> listIter = transactions.listIterator(transactions.size());
+        ListIterator<Entry> listIter = entries.listIterator(entries.size());
         while (listIter.hasPrevious()) {
             miniStatement.add(listIter.previous());
             count++;
-            if (count > BankConstants.MINI_STATEMENT_COUNT) {
+            if (count > BranchConstants.MINI_STATEMENT_COUNT) {
                 break;
             }
         }
         return miniStatement;
     }
 
-    public boolean transfer(Account to, int amount) {
-        return  transactionProcess(to, amount);
-    }
-
-    public abstract boolean deposit(int amount);
-    public abstract boolean withdraw(int withdrawAmount);
+    public abstract Transaction deposit(int amount);
+    public abstract Transaction withdraw(int withdrawAmount);
     public abstract AccountType getType();
 
     @Override
     public String toString() {
         return "Account{" +
-                "accountNumber='" + accountNumber + '\'' +
-                ", minimumBalance=" + minimumBalance +
-                ", availableBalance=" + availableBalance +
-                ", interestRate=" + interestRate +
-                ", transactions=" + transactions +
-                ", accountType=" + this.getType() +
+                " accountNumber = '" + accountNumber +
+                ", accountType = " + this.getType() +
+                ", availableBalance = " + availableBalance +
+                ", entries = " + entries +
                 '}';
     }
 }
