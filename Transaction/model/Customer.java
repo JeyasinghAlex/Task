@@ -1,4 +1,4 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
-import Task.Tranaction.enums.TransactionType;
+import Task.Transaction.enums.TransactionType;
 
 public class Transaction {
 

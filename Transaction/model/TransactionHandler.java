@@ -1,6 +1,6 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
-import Task.Tranaction.enums.TransactionType;
+import Task.Transaction.enums.TransactionType;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -8,9 +8,9 @@ public interface TransactionHandler {
 
     AtomicInteger TRANSACTION_ID_GENERATOR = new AtomicInteger(0);
 
-    default Entry processTransaction(Transaction transaction) {
+    default TransactionEntry processTransaction(Transaction transaction) {
         int balance = transaction.getFrom().getAvailableBalance();
-        Entry entry = null;
+        TransactionEntry entry = null;
         try {
             if (transaction.getType().equals(TransactionType.WITH_DRAW)) {
                 if (transaction.getFrom().getAvailableBalance() - transaction.getAmount() < transaction.getFrom().getMinimumBalance()) {
@@ -24,7 +24,7 @@ public interface TransactionHandler {
                 HeadOffice.getInstance().setAmount(transactionCharge);
                 transaction.getFrom().setAvailableBalance(availableBalance - transactionCharge);
                 String transactionId = BranchConstants.WITHDRAW_OPERATION + TRANSACTION_ID_GENERATOR.incrementAndGet();
-                entry = new Entry(transactionId, transaction, transactionCharge);
+                entry = new TransactionEntry(transactionId, transaction, transactionCharge);
                 transaction.getFrom().addEntry(entry);
             } else if (transaction.getType().equals(TransactionType.DEPOSIT)) {
                 if (transaction.getAmount() < 0) {
@@ -35,7 +35,7 @@ public interface TransactionHandler {
                 int transactionCharge = calculateProcessingAmount(transaction.getAmount());
                 transaction.getFrom().setAvailableBalance(availableBalance - transactionCharge);
                 String transactionId = BranchConstants.DEPOSIT_OPERATION + TRANSACTION_ID_GENERATOR.incrementAndGet();
-                 entry = new Entry(transactionId, transaction, transactionCharge);
+                 entry = new TransactionEntry(transactionId, transaction, transactionCharge);
                 transaction.getFrom().addEntry(entry);
             }
         } catch (Exception ex) {

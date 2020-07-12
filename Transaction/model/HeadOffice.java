@@ -1,4 +1,4 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +49,6 @@ public class HeadOffice {
     }
 
     public void setAmount(int amount) {
-        this.amount += amount;
+        HeadOffice.amount += amount;
     }
 }

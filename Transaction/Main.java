@@ -1,19 +1,21 @@
-package Task.Tranaction;
+package Task.Transaction;
 
-import Task.Tranaction.enums.AccountType;
-import Task.Tranaction.enums.TransactionType;
-import Task.Tranaction.model.*;
-import Task.Tranaction.upi.GooglePayHandler;
-import Task.Tranaction.upi.NetBankingHandler;
-import Task.Tranaction.upi.PhonePayHandler;
+import Task.Transaction.enums.AccountType;
+import Task.Transaction.enums.TransactionType;
+import Task.Transaction.model.*;
+import Task.Transaction.upi.GooglePayHandler;
+import Task.Transaction.upi.NetBankingHandler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
 
     private Scanner scan = new Scanner(System.in);
     private Branch branch = new Branch();
+    private Map<String, String> login = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println("Welcome to bank website :- ");
@@ -31,7 +33,8 @@ public class Main {
             System.out.print("Enter your option - ");
             int option = scan.nextInt();
             if (option == 1) {
-                showUserOption();
+//                showUserOption();
+                validation();
             } else if (option == 2) {
                 showAdminOption();
             } else {
@@ -40,11 +43,43 @@ public class Main {
         } while (isEnd);
     }
 
-    public void showAdminOption() {
+    public void validation() {
+        System.out.println("1 ) Sign up : ");
+        System.out.println("2 ) Sign in : ");
+        System.out.println("Otherwise exit program : ");
+        System.out.print("Enter your option -  ");
+        int option = scan.nextInt();
+        scan.nextLine();
+        if (option == 1) {
+            System.out.print("Enter your user name - ");
+            String userName = scan.nextLine();
+            System.out.print("Enter your password - ");
+            String pwd = scan.nextLine();
+            login.put(userName, pwd);
+        } else if (option == 2) {
+            System.out.print("Enter your username - ");
+            String userName = scan.nextLine();
+            System.out.print("Enter your password - ");
+            String pwd = scan.nextLine();
+            boolean ans = login.containsKey(userName);
+            if (ans) {
+                String pass = login.get(userName);
+                if (pwd.equals(pass)) {
+                    System.out.println("* -----  login successfully  ----- *");
+                    showUserOption();
+                }
+            }
+            System.out.println("* -----  Incorrect user name or password  ----- *");
+            indexPage();
+        }
+    }
+
+    private void showAdminOption() {
         System.out.println();
-        System.out.println("1 ) Search account by account number: ");
-        System.out.println("2 ) Search account by pan number - ");
+        System.out.println("1 ) Search account by account number : ");
+        System.out.println("2 ) Search account by pan number :");
         System.out.println("3 ) See all accounts : ");
+        System.out.println("4 ) Show bank balance : ");
         System.out.print("Enter your option - ");
         int option = scan.nextInt();
         scan.nextLine();
@@ -76,12 +111,16 @@ public class Main {
                     System.out.println(customer1);
                 }
                 break;
+            case 4:
+                int amount = HeadOffice.getInstance().getAmount();
+                System.out.println("Bank balance is - " + amount);
+                break;
             default:
                 break;
         }
     }
 
-    public void showUserOption() {
+    private void showUserOption() {
         System.out.println();
         System.out.println("1 ) Create Account :- ");
         System.out.println("2 ) Add UPI :- ");
@@ -127,27 +166,19 @@ public class Main {
         boolean isEnd = true;
         do {
             System.out.println("1 ) Saving account :");
-            System.out.println("2 ) Join account :");
-            System.out.println("3 ) Business account :");
+            System.out.println("2 ) Business account :");
             System.out.print("Enter your option - ");
             int option = scan.nextInt();
             switch (option) {
                 case 1:
                     return AccountType.SAVING.toString();
                 case 2:
-                    return AccountType.JOIN.toString();
-                case 3:
                     return AccountType.BUSINESS.toString();
                 default:
                     System.out.println("Please enter valid option :");
                     break;
             }
         } while (true);
-    }
-
-    private String getAccountNumber() {
-        System.out.print("Enter your account number - ");
-        return scan.nextLine();
     }
 
     private void createAccount() {
@@ -178,7 +209,7 @@ public class Main {
         System.out.print("Enter the withdraw amount - ");
         int amount = scan.nextInt();
         if (account1 != null) {
-            Entry transaction = account1.withdraw(amount);
+            TransactionEntry transaction = account1.withdraw(amount);
             if (transaction != null)
                 System.out.print("Transaction receipt - " + transaction);
         } else {
@@ -193,7 +224,7 @@ public class Main {
         System.out.print("Enter the deposit amount - ");
         int amount = scan.nextInt();
         if (account2 != null) {
-            Entry transaction = account2.deposit(amount);
+            TransactionEntry transaction = account2.deposit(amount);
             if (transaction != null)
                 System.out.print("Transaction receipt - " + transaction);
         } else {
@@ -206,8 +237,8 @@ public class Main {
         String accountNumber = scan.nextLine();
         Account ac = branch.getAccount(accountNumber);
         if (ac != null) {
-            List<Entry> entries = ac.getMiniStatement();
-            for (Entry tr : entries) {
+            List<TransactionEntry> entries = ac.getMiniStatement();
+            for (TransactionEntry tr : entries) {
                 System.out.println(tr.toString());
             }
         } else {
@@ -247,7 +278,7 @@ public class Main {
         System.out.print("Enter the transaction amount - ");
         int amount = scan.nextInt();
         Transaction transaction = new Transaction.Builder().from(from).to(to).amount(amount).type(type).build();
-        Entry entry = from.transact(transaction);
+        TransactionEntry entry = from.transact(transaction);
         if (entry != null)
             System.out.println(entry);
     }
@@ -268,7 +299,7 @@ public class Main {
         System.out.print("Enter the transaction amount - ");
         int amount = scan.nextInt();
         Transaction transaction = new Transaction.Builder().from(from).to(to).amount(amount).type(type).build();
-        Entry entry = from.transact(transaction);
+        TransactionEntry entry = from.transact(transaction);
         if (entry != null)
             System.out.println(entry);
     }
@@ -300,6 +331,7 @@ public class Main {
                 if (account1 != null) {
                     GooglePayHandler googlePay = new GooglePayHandler();
                     account1.addUpi(TransactionType.GOOGLE_PAY, googlePay);
+                    System.out.println(" ---  Successfully added UPI ---  ");
                 }else {
                     System.out.println("* -----  account not found  ----- *");
                 }

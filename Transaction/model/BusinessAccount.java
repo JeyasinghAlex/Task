@@ -1,18 +1,23 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
-import Task.Tranaction.enums.AccountType;
-import Task.Tranaction.enums.TransactionType;
+import Task.Transaction.enums.AccountType;
+import Task.Transaction.enums.TransactionType;
 
-public class SavingAccount extends Account {
+public class BusinessAccount extends Account {
 
-    private static int debitProcessingPercentage = BranchConstants.SAVING_DEBIT_PROCESSING_PERCENTAGE;
-    private static int creditProcessingPercentage = BranchConstants.SAVING_CREDIT_PROCESSING_PERCENTAGE;
-
-    public SavingAccount(String accountNumber) {
+    private static int debitProcessingPercentage = BranchConstants.BUSINESS_DEBIT_PROCESSING_PERCENTAGE;
+    private static int creditProcessingPercentage = BranchConstants.BUSINESS_CREDIT_PROCESSING_PERCENTAGE;
+    public BusinessAccount(String accountNumber) {
         super(accountNumber);
     }
+
+    /**
+     *
+     * @param amount
+     * @return
+     */
     @Override
-    public Entry withdraw(int amount) {
+    public TransactionEntry withdraw(int amount) {
         Transaction transaction = new Transaction.Builder().from(this).amount(amount).type(TransactionType.WITH_DRAW).build();
         return ((TransactionHandler) amt -> {
             int count = 0;
@@ -27,7 +32,7 @@ public class SavingAccount extends Account {
     }
 
     @Override
-    public Entry deposit(int amount) {
+    public TransactionEntry deposit(int amount) {
         Transaction transaction = new Transaction.Builder().from(this).amount(amount).type(TransactionType.DEPOSIT).build();
         return ((TransactionHandler) amt -> {
             int count = 0;
@@ -43,15 +48,6 @@ public class SavingAccount extends Account {
 
     @Override
     public AccountType getType() {
-        return AccountType.SAVING;
+        return AccountType.BUSINESS;
     }
-
-//    @Override
-//    public boolean transfer(Account to, int amount) {
-//        return ((TransactionHandler) amt -> {
-//            return amt * DEBIT_PROCESSING_PERCENTAGE / 100;
-//        }).processTransaction(this, to, amount, TransactionType.TRANSFER);
-//    }
 }
-
-

@@ -1,7 +1,7 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
-import Task.Tranaction.enums.AccountType;
-import Task.Tranaction.enums.TransactionType;
+import Task.Transaction.enums.AccountType;
+import Task.Transaction.enums.TransactionType;
 
 import java.util.*;
 
@@ -10,12 +10,13 @@ public abstract class Account {
     private int minimumBalance;
     private int availableBalance;
     private int interestRate;
-    private List<Entry> entries;
+    private List<TransactionEntry> entries;
     private Map<TransactionType, UPIhandler> upIhandlers;
 
     public Account(String accountNumber) {
         this.accountNumber = accountNumber;
     }
+
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -44,20 +45,20 @@ public abstract class Account {
         return interestRate;
     }
 
-    public void addEntry(Entry entry) {
+    public void addEntry(TransactionEntry entry) {
         if (entries == null) {
             entries = new ArrayList<>();
         }
         this.entries.add(entry);
     }
 
-    public List<Entry> getEntries() {
+    public List<TransactionEntry> getEntries() {
         return entries;
     }
 
     public void addUpi(TransactionType type, UPIhandler upIhandler) {
         if (upIhandlers == null) {
-               upIhandlers = new HashMap<>();
+            upIhandlers = new HashMap<>();
         }
         this.upIhandlers.put(type, upIhandler);
     }
@@ -66,10 +67,10 @@ public abstract class Account {
         return upIhandlers;
     }
 
-    public List<Entry> getMiniStatement() {
-        List<Entry> miniStatement = new ArrayList<>();
+    public List<TransactionEntry> getMiniStatement() {
+        List<TransactionEntry> miniStatement = new ArrayList<>();
         int count = 0;
-        ListIterator<Entry> listIter = entries.listIterator(entries.size());
+        ListIterator<TransactionEntry> listIter = entries.listIterator(entries.size());
         while (listIter.hasPrevious()) {
             miniStatement.add(listIter.previous());
             count++;
@@ -80,12 +81,15 @@ public abstract class Account {
         return miniStatement;
     }
 
-    public Entry transact(Transaction transaction) {
+    public TransactionEntry transact(Transaction transaction) {
         UPIhandler upIhandler = upIhandlers.get(transaction.getType());
-       return upIhandler.transact(transaction);
+        return upIhandler.transact(transaction);
     }
-    public abstract Entry deposit(int amount);
-    public abstract Entry withdraw(int withdrawAmount);
+
+    public abstract TransactionEntry deposit(int amount);
+
+    public abstract TransactionEntry withdraw(int withdrawAmount);
+
     protected abstract AccountType getType();
 
     @Override

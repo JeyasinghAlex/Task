@@ -1,17 +1,17 @@
-package Task.Tranaction.model;
+package Task.Transaction.model;
 
-public class Entry {
+public class TransactionEntry {
 
     private String transactionId;
     private Transaction transaction;
     private int transactionCharge;
 
-    public Entry(String transactionId, Transaction transaction) {
+    public TransactionEntry(String transactionId, Transaction transaction) {
         this.transactionId = transactionId;
         this.transaction = transaction;
     }
 
-    public Entry(String transactionId, Transaction transaction, int transactionCharge) {
+    public TransactionEntry(String transactionId, Transaction transaction, int transactionCharge) {
         this.transactionId = transactionId;
         this.transaction = transaction;
         this.transactionCharge = transactionCharge;
