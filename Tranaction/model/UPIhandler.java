@@ -2,5 +2,5 @@ package Task.Tranaction.model;
 
 public interface UPIhandler {
 
-    public abstract boolean validateUserAccount(Account account);
+    public abstract Entry transact(Transaction transaction);
 }

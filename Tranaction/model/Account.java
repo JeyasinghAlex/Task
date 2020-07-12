@@ -1,11 +1,9 @@
 package Task.Tranaction.model;
 
 import Task.Tranaction.enums.AccountType;
-import Task.Tranaction.utils.BankConstants;
+import Task.Tranaction.enums.TransactionType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public abstract class Account {
     private String accountNumber;
@@ -13,11 +11,11 @@ public abstract class Account {
     private int availableBalance;
     private int interestRate;
     private List<Entry> entries;
+    private Map<TransactionType, UPIhandler> upIhandlers;
 
-    public void setAccountNumber(String accountNumber) {
+    public Account(String accountNumber) {
         this.accountNumber = accountNumber;
     }
-
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -26,7 +24,7 @@ public abstract class Account {
         return minimumBalance;
     }
 
-    public void setMinimumBalance(int minimumBalance) {
+    protected void setMinimumBalance(int minimumBalance) {
         this.minimumBalance = minimumBalance;
     }
 
@@ -38,12 +36,12 @@ public abstract class Account {
         this.availableBalance = availableBalance;
     }
 
-    public int getInterestRate() {
-        return interestRate;
+    protected void setInterestRate(int interestRate) {
+        this.interestRate = interestRate;
     }
 
-    public void setInterestRate(int interestRate) {
-        this.interestRate = interestRate;
+    public int getInterestRate() {
+        return interestRate;
     }
 
     public void addEntry(Entry entry) {
@@ -55,6 +53,17 @@ public abstract class Account {
 
     public List<Entry> getEntries() {
         return entries;
+    }
+
+    public void addUpi(TransactionType type, UPIhandler upIhandler) {
+        if (upIhandlers == null) {
+               upIhandlers = new HashMap<>();
+        }
+        this.upIhandlers.put(type, upIhandler);
+    }
+
+    public Map<TransactionType, UPIhandler> getUpIhandlers() {
+        return upIhandlers;
     }
 
     public List<Entry> getMiniStatement() {
@@ -71,9 +80,13 @@ public abstract class Account {
         return miniStatement;
     }
 
-    public abstract Transaction deposit(int amount);
-    public abstract Transaction withdraw(int withdrawAmount);
-    public abstract AccountType getType();
+    public Entry transact(Transaction transaction) {
+        UPIhandler upIhandler = upIhandlers.get(transaction.getType());
+       return upIhandler.transact(transaction);
+    }
+    public abstract Entry deposit(int amount);
+    public abstract Entry withdraw(int withdrawAmount);
+    protected abstract AccountType getType();
 
     @Override
     public String toString() {

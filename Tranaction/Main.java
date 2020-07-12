@@ -3,6 +3,9 @@ package Task.Tranaction;
 import Task.Tranaction.enums.AccountType;
 import Task.Tranaction.enums.TransactionType;
 import Task.Tranaction.model.*;
+import Task.Tranaction.upi.GooglePayHandler;
+import Task.Tranaction.upi.NetBankingHandler;
+import Task.Tranaction.upi.PhonePayHandler;
 
 import java.util.List;
 import java.util.Scanner;
@@ -81,12 +84,13 @@ public class Main {
     public void showUserOption() {
         System.out.println();
         System.out.println("1 ) Create Account :- ");
-        System.out.println("2 ) Balance Enquiry :- ");
-        System.out.println("3 ) Withdraw :- ");
-        System.out.println("4 ) Deposit :- ");
-        System.out.println("5 ) Transfer :- ");
-        System.out.println("6 ) Show mini statement :- ");
-        System.out.println("7 ) Exit :- ");
+        System.out.println("2 ) Add UPI :- ");
+        System.out.println("3 ) Balance Enquiry :- ");
+        System.out.println("4 ) Withdraw :- ");
+        System.out.println("5 ) Deposit :- ");
+        System.out.println("6 ) Transfer :- ");
+        System.out.println("7 ) Show mini statement :- ");
+        System.out.println("8 ) Exit :- ");
         System.out.print("Please enter your  option - ");
         int option = scan.nextInt();
         scan.nextLine();
@@ -95,18 +99,21 @@ public class Main {
                 createAccount();
                 break;
             case 2:
-                balanceEnquiry();
+                addUpi();
                 break;
             case 3:
-                withdraw();
+                balanceEnquiry();
                 break;
             case 4:
-                deposit();
+                withdraw();
                 break;
             case 5:
-                transfer();
+                deposit();
                 break;
             case 6:
+                transfer();
+                break;
+            case 7:
                 getMiniStatement();
                 break;
             default:
@@ -158,7 +165,7 @@ public class Main {
         String accountNumber = scan.nextLine();
         Account account = branch.getAccount(accountNumber);
         if (account != null) {
-            System.out.print("Your account is - " + account.getType() + " and your available balance is - " + account.getAvailableBalance());
+            System.out.print("Your available balance is - " + account.getAvailableBalance());
         } else {
             System.out.println("* -----  Account not found  ----- *");
         }
@@ -171,7 +178,7 @@ public class Main {
         System.out.print("Enter the withdraw amount - ");
         int amount = scan.nextInt();
         if (account1 != null) {
-            Transaction transaction = account1.withdraw(amount);
+            Entry transaction = account1.withdraw(amount);
             if (transaction != null)
                 System.out.print("Transaction receipt - " + transaction);
         } else {
@@ -186,7 +193,7 @@ public class Main {
         System.out.print("Enter the deposit amount - ");
         int amount = scan.nextInt();
         if (account2 != null) {
-            Transaction transaction = account2.deposit(amount);
+            Entry transaction = account2.deposit(amount);
             if (transaction != null)
                 System.out.print("Transaction receipt - " + transaction);
         } else {
@@ -209,46 +216,97 @@ public class Main {
     }
 
     private void transfer() {
-        System.out.println("1 ) Passbook transaction :- ");
+        System.out.println("1 ) Net banking  transaction :- ");
         System.out.println("2 ) Google pay transaction :- ");
         System.out.print("Enter your option - ");
         int option = scan.nextInt();
         switch (option) {
             case 1:
-                PassbookPaymentHandler paymentHandler = new PassbookPaymentHandler();
-                makeTransfer(paymentHandler);
+                makeTransferNetBanking(TransactionType.NET_BANKING);
                 break;
             case 2:
-                GooglePayHandler googlePayHandler = new GooglePayHandler();
-                makeTransfer(googlePayHandler);
+                makeTransferUPI(TransactionType.GOOGLE_PAY);
                 break;
             default:
                 break;
         }
     }
 
-    private void makeTransfer(PaymentHandler paymentHandler) {
+    private void makeTransferNetBanking(TransactionType type) {
         scan.nextLine();
         System.out.print("Enter the FROM account number - ");
         String acc1 = scan.nextLine();
         Account from = branch.getAccount(acc1);
-        if (from == null) {
-            System.out.println("* -----   Account not fount   ----- *");
-            return;
-        }
         System.out.print("Enter the TO account number - ");
         String acc2 = scan.nextLine();
         Account to = branch.getAccount(acc2);
-        if (to == null) {
+        if (from == null || to == null || from.getUpIhandlers() == null || !from.getUpIhandlers().containsKey(type)) {
             System.out.println("* -----   Account not fount   ----- *");
             return;
         }
         System.out.print("Enter the transaction amount - ");
         int amount = scan.nextInt();
-        Transaction transaction = new Transaction.Builder().from(from).to(to).amount(amount).type(TransactionType.GOOGLE_PAY).build();
-//        paymentHandler.transact(from, to, amount);
-        Entry entry = paymentHandler.transact(transaction);
+        Transaction transaction = new Transaction.Builder().from(from).to(to).amount(amount).type(type).build();
+        Entry entry = from.transact(transaction);
         if (entry != null)
             System.out.println(entry);
+    }
+
+    private void makeTransferUPI(TransactionType type) {
+        scan.nextLine();
+        System.out.print("Enter the FROM account number - ");
+        String acc1 = scan.nextLine();
+        Account from = branch.getAccount(acc1);
+        System.out.print("Enter the TO account number - ");
+        String acc2 = scan.nextLine();
+        Account to = branch.getAccount(acc2);
+        if (from == null || to == null || from.getUpIhandlers() == null || to.getUpIhandlers() == null
+                ||!from.getUpIhandlers().containsKey(type) || !to.getUpIhandlers().containsKey(type)) {
+            System.out.println("* -----   Account not fount   ----- *");
+            return;
+        }
+        System.out.print("Enter the transaction amount - ");
+        int amount = scan.nextInt();
+        Transaction transaction = new Transaction.Builder().from(from).to(to).amount(amount).type(type).build();
+        Entry entry = from.transact(transaction);
+        if (entry != null)
+            System.out.println(entry);
+    }
+
+    private void addUpi() {
+        System.out.println("1 ) NetBanking :- ");
+        System.out.println("2 ) GooglePay :-");
+        System.out.print("Enter your option - ");
+        int option = scan.nextInt();
+        scan.nextLine();
+        switch(option) {
+            case 1:
+                System.out.print("Enter your account number - ");
+                String ac = scan.nextLine();
+                Account account = branch.getAccount(ac);
+                if (account != null) {
+                    NetBankingHandler googlePay = new NetBankingHandler();
+                    account.addUpi(TransactionType.NET_BANKING, googlePay);
+                    System.out.println(" ---  Successfully added UPI ---  ");
+                }else {
+                    System.out.println("* -----  account not found  ----- *");
+                }
+                break;
+            case 2:
+                System.out.print("Enter your account number - ");
+                String ac1 = scan.nextLine();
+                Account account1 = branch.getAccount(ac1);
+
+                if (account1 != null) {
+                    GooglePayHandler googlePay = new GooglePayHandler();
+                    account1.addUpi(TransactionType.GOOGLE_PAY, googlePay);
+                }else {
+                    System.out.println("* -----  account not found  ----- *");
+                }
+                break;
+            default:
+                System.out.println("* -----  Please, enter the valid option :  ----- *");
+                break;
+        }
     }
 }

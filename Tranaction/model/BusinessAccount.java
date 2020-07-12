@@ -2,15 +2,16 @@ package Task.Tranaction.model;
 
 import Task.Tranaction.enums.AccountType;
 import Task.Tranaction.enums.TransactionType;
-import Task.Tranaction.utils.BankConstants;
 
 public class BusinessAccount extends Account {
 
     private static int debitProcessingPercentage = BranchConstants.BUSINESS_DEBIT_PROCESSING_PERCENTAGE;
     private static int creditProcessingPercentage = BranchConstants.BUSINESS_CREDIT_PROCESSING_PERCENTAGE;
-
+    public BusinessAccount(String accountNumber) {
+        super(accountNumber);
+    }
     @Override
-    public Transaction withdraw(int amount) {
+    public Entry withdraw(int amount) {
         Transaction transaction = new Transaction.Builder().from(this).amount(amount).type(TransactionType.WITH_DRAW).build();
         return ((TransactionHandler) amt -> {
             int count = 0;
@@ -25,7 +26,7 @@ public class BusinessAccount extends Account {
     }
 
     @Override
-    public Transaction deposit(int amount) {
+    public Entry deposit(int amount) {
         Transaction transaction = new Transaction.Builder().from(this).amount(amount).type(TransactionType.DEPOSIT).build();
         return ((TransactionHandler) amt -> {
             int count = 0;

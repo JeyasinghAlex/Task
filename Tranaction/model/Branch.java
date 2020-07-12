@@ -2,7 +2,7 @@ package Task.Tranaction.model;
 
 import Task.Tranaction.enums.AccountType;
 import Task.Tranaction.enums.TransactionType;
-import Task.Tranaction.utils.BankConstants;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,21 +41,20 @@ public class Branch {
 
     public String createAccount(String panNumber, String accountType, int amount) {
         Account newAccount = null;
+        String accountNumber = BranchConstants.BANK_ACCOUNT_NUMBER_PREFIX + panNumber;
         if (accountType.equals(AccountType.SAVING.toString())) {
-            newAccount = new SavingAccount();
+            newAccount = new SavingAccount(accountNumber);
             newAccount.setMinimumBalance(BranchConstants.SAVING_ACCOUNT_MINIMUM_BALANCE);
             newAccount.setInterestRate(BranchConstants.SAVING_ACCOUNT_INTEREST);
         } else if (accountType.equals(AccountType.JOIN.toString())) {
-            newAccount = new JointAccount();
+            newAccount = new JointAccount(accountNumber);
             newAccount.setMinimumBalance(BranchConstants.JOIN_ACCOUNT_MINIMUM_BALANCE);
             newAccount.setInterestRate(BranchConstants.JOIN_ACCOUNT_INTEREST);
         } else {
-            newAccount = new BusinessAccount();
+            newAccount = new BusinessAccount(accountNumber);
             newAccount.setMinimumBalance(BranchConstants.BUSINESS_ACCOUNT_MINIMUM_BALANCE);
             newAccount.setInterestRate(BranchConstants.BUSINESS_ACCOUNT_INTEREST);
         }
-        String accountNumber = BranchConstants.BANK_ACCOUNT_NUMBER_PREFIX + panNumber;
-        newAccount.setAccountNumber(accountNumber);
         newAccount.setAvailableBalance(amount);
         String transactionId = BranchConstants.DEPOSIT_OPERATION + TransactionHandler.TRANSACTION_ID_GENERATOR.incrementAndGet();
         Transaction transaction = new Transaction.Builder().from(newAccount).amount(amount).type(TransactionType.DEPOSIT).build();
@@ -65,9 +64,9 @@ public class Branch {
         Customer alreadyCustomer = customerPresentWithPanNumber(panNumber);
 
         if (alreadyCustomer != null) {
+            System.out.println("* -----  Customer is already present with the pan number, added another account  ----- *");
             alreadyCustomer.addAccounts(newAccount);
         } else {
-            System.out.println("* -----  Customer is already present with the pan number, added another account  ----- *");
             Customer newCustomer = new Customer();
             newCustomer.setPanNumber(panNumber);
             newCustomer.addAccounts(newAccount);

@@ -45,8 +45,9 @@ public class Entry {
     @Override
     public String toString() {
         return "Entry{" +
-                "transactionId='" + transactionId + '\'' +
-                ", transaction=" + transaction +
+                " transactionId = '" + transactionId + '\'' +
+                ", transaction = " + transaction +
+                ", transactionCharge = " + transactionCharge +
                 '}';
     }
 }
