@@ -8,6 +8,12 @@ public interface TransactionHandler {
 
     AtomicInteger TRANSACTION_ID_GENERATOR = new AtomicInteger(0);
 
+    /**
+     * In this method purpose of withdraw or deposit amount ....
+     * During this transaction process something happen wrong catch block will execute and process will reset......
+     * @param transaction
+     * @return
+     */
     default TransactionEntry processTransaction(Transaction transaction) {
         int balance = transaction.getFrom().getAvailableBalance();
         TransactionEntry entry = null;

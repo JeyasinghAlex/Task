@@ -81,6 +81,11 @@ public abstract class Account {
         return miniStatement;
     }
 
+    /**
+     * In these method purpose of connect the another application using interface
+     * @param transaction
+     * @return
+     */
     public TransactionEntry transact(Transaction transaction) {
         UPIhandler upIhandler = upIhandlers.get(transaction.getType());
         return upIhandler.transact(transaction);
