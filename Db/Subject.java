@@ -5,7 +5,6 @@ public class Subject {
     private String name;
     private int mark;
     private String staff;
-    private boolean isPass;
 
 
     public String getName() {
@@ -32,21 +31,12 @@ public class Subject {
         this.staff = staff;
     }
 
-    public boolean isPass() {
-        return isPass;
-    }
-
-    public void setPass(boolean pass) {
-        isPass = pass;
-    }
-
     @Override
     public String toString() {
         return "Subject{" +
                 "name='" + name + '\'' +
                 ", mark=" + mark +
                 ", staff='" + staff + '\'' +
-                ", isPass=" + isPass +
                 '}';
     }
 }

@@ -11,15 +11,17 @@ public class Main {
         DbApi api = new DbApi();
         boolean isEnd = true;
         do {
+            System.out.println();
             System.out.println("1 ) Print each student data : ");
-            System.out.println("2 ) find top 3 collage students : ");
-            System.out.println("3 ) print each department top 3 student :");
-            System.out.println("4 ) find the nth rand student details : ");
-            System.out.println("5 ) print pass and fail student data : ");
-            System.out.println("6 ) print each subject average mark : ");
-            System.out.println("7 ) print each subject highest mark ; ");
-            System.out.println("8 ) department wise pass percentage :");
-            System.out.println("9 ) teacher wise pass percentage : ");
+            System.out.println("2 ) Find top 3 collage students : ");
+            System.out.println("3 ) Print each department top 3 student :");
+            System.out.println("4 ) Find the nth rand student details : ");
+            System.out.println("5 ) Print pass and fail student data : ");
+            System.out.println("6 ) Print each subject average mark : ");
+            System.out.println("7 ) Print each subject highest mark ; ");
+            System.out.println("8 ) Department wise pass percentage :");
+            System.out.println("9 ) Teacher wise pass percentage : ");
+            System.out.println("10 ) Exit : ");
             System.out.print("Enter your option : ");
             int option = scan.nextInt();
             switch (option) {

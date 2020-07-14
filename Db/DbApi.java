@@ -288,8 +288,7 @@ public class DbApi {
 
     public void getPassPercentageDeptWise() {
         Map<String, Integer> passPercentage = new HashMap<>();
-        List<Student> students = Dao.getInstance().getResult();
-        students = getStudentData();
+        List<Student> students = getStudentData();
         for (Department department : Department.values()) {
             int count = 0;
             int totalStudent = 0;
@@ -305,7 +304,8 @@ public class DbApi {
             passPercentage.put(department.toString(), (pass * 100) / totalStudent);
         }
         for (Map.Entry<String, Integer> entry : passPercentage.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue() +"%");
+            System.out.format("%1c%-20s%1c%4d%2s%1c", '|', entry.getKey(), '|', entry.getValue(), "", '|');
+            System.out.println();
         }
     }
 
@@ -327,7 +327,8 @@ public class DbApi {
         }
 
         for (Map.Entry<String, Integer> entry : passPercentage.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
+            System.out.format("%1c%-20s%1c%4d%2s%1c", '|', entry.getKey(), '|', entry.getValue(), "", '|');
+            System.out.println();
         }
     }
 
