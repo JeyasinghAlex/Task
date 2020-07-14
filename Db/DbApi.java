@@ -25,32 +25,9 @@ public class DbApi {
     }
 
     public void getTopThreeStudents() {
-        List<Student> students = Dao.getInstance().getResult();
-        List<Student> passStudents = new ArrayList<>();
-        for (Student student : students) {
-            if (isPass(student)) {
-                passStudents.add(student);
-            }
-        }
 
-        Collections.sort(passStudents, new Comparator<Student>() {
-            @Override
-            public int compare(Student student1, Student student2) {
-                int sum1 = 0;
-                int sum2 = 0;
-                for (Subject subject : student1.getSubjects()) {
-                    sum1 += subject.getMark();
-                }
-                for (Subject subject : student2.getSubjects()) {
-                    sum2 += subject.getMark();
-                }
-                if (sum1 < sum2) {
-                    return 1;
-                }
-                return -1;
-            }
-        });
-
+        List<Student> passStudents = getPassStudent();
+        sort(passStudents);
         int count = 0;
         int rank = 0;
         List<Integer> mark = new ArrayList<>();
@@ -69,6 +46,17 @@ public class DbApi {
         }
     }
 
+    private List<Student>  getPassStudent() {
+        List<Student> students = Dao.getInstance().getResult();
+        List<Student> passStudents = new ArrayList<>();
+        for (Student student : students) {
+            if (isPass(student)) {
+                passStudents.add(student);
+            }
+        }
+        return passStudents;
+    }
+
     private int getTotalMark(Student student) {
         int sum = 0;
         for (int i = 0; i < student.getSubjects().size(); ++i) {
@@ -79,14 +67,8 @@ public class DbApi {
 
 
     public void getEachDepartmentTopRanks() {
-        List<Student> students = Dao.getInstance().getResult();
-        List<Student> passStudents = new ArrayList<>();
-        for (Student student : students) {
-            if (isPass(student)) {
-                passStudents.add(student);
-            }
-        }
 
+        List<Student> passStudents = getPassStudent();
         Collections.sort(passStudents, new Comparator<Student>() {
             @Override
             public int compare(Student student1, Student student2) {
@@ -136,32 +118,9 @@ public class DbApi {
     }
 
     public void getNthRankStudent(int n) {
-        List<Student> students = Dao.getInstance().getResult();
-        List<Student> passStudents = new ArrayList<>();
-        for (int i = 0; i < students.size(); ++i) {
-            if (isPass(students.get(i))) {
-                passStudents.add(students.get(i));
-            }
-        }
 
-        Collections.sort(passStudents, new Comparator<Student>() {
-            @Override
-            public int compare(Student student1, Student student2) {
-                int sum1 = 0;
-                int sum2 = 0;
-                for (Subject subject : student1.getSubjects()) {
-                    sum1 += subject.getMark();
-                }
-                for (Subject subject : student2.getSubjects()) {
-                    sum2 += subject.getMark();
-                }
-                if (sum1 < sum2) {
-                    return 1;
-                }
-                return -1;
-            }
-        });
-
+        List<Student> passStudents = getPassStudent();
+        sort(passStudents);
         int count = 0;
         int rank = 0;
         List<Integer> mark = new ArrayList<>();
@@ -192,31 +151,34 @@ public class DbApi {
                 failStudents.add(students.get(i));
             }
         }
-
-        Comparator<Student> com = (student1, student2) ->
-        {
-            int sum1 = 0;
-            int sum2 = 0;
-            for (Subject subject : student1.getSubjects()) {
-                sum1 += subject.getMark();
-            }
-            for (Subject subject : student2.getSubjects()) {
-                sum2 += subject.getMark();
-            }
-            if (sum1 < sum2) {
-                return 1;
-            } else if (sum1 == sum2) {
-                return 0;
-            }
-            return -1;
-        };
-
-        passStudents.sort(com);
-        failStudents.sort(com);
+        sort(passStudents);
+        sort(failStudents);
         System.out.println("* -----   Pass Student Rank :-  ----- *");
         getAllStudentsRank(passStudents);
         System.out.println("* -----   fail Student Rank :-  ----- *");
         getAllStudentsRank(failStudents);
+    }
+
+    private void sort(List<Student> students) {
+        Collections.sort(students, new Comparator<Student>() {
+            @Override
+            public int compare(Student student1, Student student2) {
+                int sum1 = 0;
+                int sum2 = 0;
+                for (Subject subject : student1.getSubjects()) {
+                    sum1 += subject.getMark();
+                }
+                for (Subject subject : student2.getSubjects()) {
+                    sum2 += subject.getMark();
+                }
+                if (sum1 < sum2) {
+                    return 1;
+                } else if (sum1 == sum2) {
+                    return 0;
+                }
+                return -1;
+            }
+        });
     }
 
     private void getAllStudentsRank(List<Student> students) {
