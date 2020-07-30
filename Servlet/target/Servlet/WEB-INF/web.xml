@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+   
+  <display-name>Archetype Created Web Application</display-name>
+  <welcome-file-list>
+    <welcome-file>staffView.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+    <description></description>
+  	<servlet-name>StudentLoginServlet</servlet-name>
+  	<display-name>StudentLoginServlet</display-name>  	
+  	<servlet-class>com.emulous.servlet.StudentLoginServlet</servlet-class>  	
+  </servlet>
+  
+  <servlet>
+  	<description></description>
+  	<display-name>LogoutServlet</display-name>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.LogoutServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description></description>
+  	<display-name>StudentServlet</display-name>
+  	<servlet-name>StudentServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.StudentServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description></description>
+  	<display-name>AdminServlet</display-name>
+  	<servlet-name>AdminServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.AdminServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description></description>
+  	<display-name>IndividualStudentServlet</display-name>
+  	<servlet-name>IndividualStudentServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.IndividualStudentServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description></description>
+  	<display-name>ResultServlet</display-name>
+  	<servlet-name>ResultServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.ResultServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description></description>
+  	<display-name>AverageResultServlet</display-name>
+  	<servlet-name>AverageResultServlet</servlet-name>
+    <servlet-class>com.emulous.servlet.AverageResultServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>DepartmentPassPercentageServlet</display-name>
+  	<servlet-name>DepartmentPassPercentageServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.DepartmentPassPercentageServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>DepartmentsSubjectsAverageServlet</display-name>
+  	<servlet-name>DepartmentsSubjectsAverageServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.DepartmentsSubjectsAverageServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>DepartmentSubjectHighMarkServlet</display-name>
+  	<servlet-name>DepartmentSubjectHighMarkServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.DepartmentSubjectHighMarkServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>DepartmentsTopStudentsServlet</display-name>
+  	<servlet-name>DepartmentsTopStudentsServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.DepartmentsTopStudentsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>CollageTopStudentsServlet</display-name>
+  	<servlet-name>CollageTopStudentsServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.CollageTopStudentsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>CollageRankServlet</display-name>
+  	<servlet-name>CollageRankServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.CollageRankServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>StaffResultServlet</display-name>
+  	<servlet-name>StaffResultServlet</servlet-name>
+  	<servlet-class>com.emulous.servlet.StaffResultServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>LogoutServlet</servlet-name>
+  	<url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>StudentServlet</servlet-name>
+  	<url-pattern>/api/v0.1/exam/rank</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>AdminServlet</servlet-name>
+  	<url-pattern>/api/v0.1/Admin</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>IndividualStudentServlet</servlet-name>
+  	<url-pattern>/api/v0.1/exam/student/id</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ResultServlet</servlet-name>
+  	<url-pattern>/api/v0.1/exams/results/rank</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DepartmentPassPercentageServlet</servlet-name>
+  	<url-pattern>/api/v0.1/department/result</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DepartmentsSubjectsAverageServlet</servlet-name>
+  	<url-pattern>/api/v0.1/departments/subjects/exams/results/average</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+  	<servlet-name>DepartmentSubjectHighMarkServlet</servlet-name>
+  	<url-pattern>/api/v0.1/departments/subjects/exams/result/mark</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DepartmentsTopStudentsServlet</servlet-name>
+  	<url-pattern>/api/v0.1/departments/exams/result/top-rank</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>CollageTopStudentsServlet</servlet-name>
+  	<url-pattern>/api/v0.1/exams/result</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CollageRankServlet</servlet-name>
+  	<url-pattern>/api/v0.1/exam/result/top-rank</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>StaffResultServlet</servlet-name>
+  	<url-pattern>/api/v0.1/staff/exam/result</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
