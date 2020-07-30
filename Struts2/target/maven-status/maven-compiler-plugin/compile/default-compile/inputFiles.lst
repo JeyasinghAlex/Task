@@ -1,0 +1,12 @@
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/dao/DatabaseImpl.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/service/OverallOperationImpl.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/action/TutorialAction.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/service/TutorialFinderService.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/action/StudentAction.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/model/Subject.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/action/LoginAction.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/commonUtils/ConfigUtil.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/dao/DatabaseHandler.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/service/StaffOperationHandler.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/service/StudentOperationHandler.java
+/home/alex/eclipse-workspace/Struts2/src/com/emulous/model/Student.java
