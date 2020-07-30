@@ -19,10 +19,10 @@ public class Main {
         int numberOfFiles = scan.nextInt();
         System.out.print("Enter the number of students - ");
         int numberOfStudents = scan.nextInt();
-        new Main().createFile(numberOfThreads, numberOfFiles, numberOfStudents);
+        createFile(numberOfThreads, numberOfFiles, numberOfStudents);
     }
 
-    private void createFile(int threads, int files, int students) {
+    private static void createFile(int threads, int files, int students) {
 
         int index = 0;
         int limits = students / files;
@@ -57,7 +57,7 @@ public class Main {
         executeThread(threads, fileHandlers);
     }
 
-    private void executeThread(int threads, List<FileHandler> fileHandlers) {
+    private static void executeThread(int threads, List<FileHandler> fileHandlers) {
 
         ExecutorService service = Executors.newFixedThreadPool(threads);
         for (FileHandler handler : fileHandlers) {
