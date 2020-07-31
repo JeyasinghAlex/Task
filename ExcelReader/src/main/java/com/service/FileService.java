@@ -30,7 +30,8 @@ public class FileService {
 
 		JSONObject json = ExcelReader.getInstance().getResult(inputStream, fileDetail);
 		if (json.isEmpty()) {
-			return RestError.errorResponse(RestError.STATUS, RestError.ERROR_STATUS, RestError.STATUS_CODE);
+			return RestError.errorResponse(RestError.STATUS, RestError.UNSUPPORTED_MEDIA_TYPE_ERROR_STATUS
+					, RestError.UNSUPPORTED_MEDIA_TYPE_STATUS_CODE);
 		}
 		return RestSuccess.successResponse(json);
 	}
