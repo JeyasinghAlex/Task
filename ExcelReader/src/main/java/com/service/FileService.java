@@ -30,7 +30,7 @@ public class FileService {
 
 		JSONObject json = ExcelReader.getInstance().getResult(inputStream, fileDetail);
 		if (json.isEmpty()) {
-			return RestError.errorResponse("status", "Unprocessable Entity", 422);
+			return RestError.errorResponse(RestError.STATUS, RestError.ERROR_STATUS, RestError.STATUS_CODE);
 		}
 		return RestSuccess.successResponse(json);
 	}
