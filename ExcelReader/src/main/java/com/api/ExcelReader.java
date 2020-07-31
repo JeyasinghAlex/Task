@@ -52,7 +52,7 @@ public class ExcelReader {
 		try {
 			List<Student> students = readStudentsFromExcelFile(inputStream, fileDetail);
 			excelRowCount = students.size();
-			students = removeDublicateExcel(students);
+			students = removeDuplicateExcel(students);
 			dublicateExcelRowCount = excelRowCount - students.size();
 			insertedRow = insertStudentsData(students);
 			dublicateDbRow = students.size() - insertedRow;
@@ -61,7 +61,11 @@ public class ExcelReader {
 			map.put("Successfully inserted", insertedRow);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
+		}catch (NullPointerException  e) {
+//			e.printStackTrace();
+			return new JSONObject();
 		}
+		
 		JSONObject json = new JSONObject(map);
 		return json;
 	}
@@ -84,7 +88,7 @@ public class ExcelReader {
 		return insertedRow;
 	}
 
-	private List<Student> removeDublicateExcel(List<Student> students) {
+	private List<Student> removeDuplicateExcel(List<Student> students) {
 
 		Set<Integer> studentId = new HashSet<>();
 		List<Student> newStudents = new ArrayList<>();
@@ -103,6 +107,9 @@ public class ExcelReader {
 
 		List<Student> students = new ArrayList<>();
 		Workbook workbook = getWorkbook(inputStream, fileDetail.getFileName());
+		if (workbook == null) {
+			return null;
+		}
 		// First page :-
 		Sheet firstSheet = workbook.getSheetAt(0);
 		Iterator<Row> iterator = firstSheet.iterator();
@@ -142,7 +149,8 @@ public class ExcelReader {
 		} else if (fileName.endsWith(Extension.XLS.name().toLowerCase())) {
 			workbook = new XSSFWorkbook(inputStream);
 		} else {
-			throw new IllegalArgumentException("The specified file is not Excel file");
+//			throw new IllegalArgumentException("The specified file is not Excel file");
+			workbook = null;
 		}
 
 		return workbook;
