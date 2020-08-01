@@ -6,16 +6,16 @@ import java.io.IOException;
 
 public class FileHandler implements Runnable {
 
-    private File fileName;
+    private File file;
     private int startIndex;
     private int endIndex;
 
-    public File getFileName() {
-        return fileName;
+    public File getFile() {
+        return file;
     }
 
-    public void setFileName(File fileName) {
-        this.fileName = fileName;
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public int getStartIndex() {
@@ -38,7 +38,11 @@ public class FileHandler implements Runnable {
     public void run() {
         System.out.println("------------  " + Thread.currentThread().getName());
         try {
-            FileWriter fw = new FileWriter(this.getFileName(), true);
+            if(this.getFile().isFile()){
+                this.getFile().delete();
+            }
+            this.getFile().createNewFile();
+            FileWriter fw = new FileWriter(this.getFile(), true);
             for (int i = this.getStartIndex(); i <= this.getEndIndex(); ++i) {
                 fw.write(i + "  " + Util.getRandomString() + "\n");
             }

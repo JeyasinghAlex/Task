@@ -1,7 +1,6 @@
 package Task.ThreadPool;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -28,7 +27,7 @@ public class Main {
         for (int i = 1; i <= files && students > 0; ++i) {
             FileHandler handler = new FileHandler();
             File file = new File("filename" + i + ".txt");
-            handler.setFileName(file);
+            handler.setFile(file);
             handler.setStartIndex(index + 1);
             if (files == i) {
                 handler.setEndIndex(index + students);
@@ -42,15 +41,6 @@ public class Main {
 
             index = limits * i;
             students = students - limits;
-            try {
-                if (file.createNewFile()) {
-                    System.out.println("File created: " + file.getName());
-                } else {
-                    System.out.println("File already exists.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         executeThread(threads, queue);
     }

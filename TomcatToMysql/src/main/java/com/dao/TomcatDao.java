@@ -38,7 +38,7 @@ public class TomcatDao {
 	public void insert() throws SQLException {
 		String query = "INSERT INTO status(name) VALUES(?)";
 		PreparedStatement pstmt = connection.prepareStatement(query);
-		pstmt.setString(1, "started");
+		pstmt.setString(1, "server started");
 		pstmt.executeUpdate();
 	}
 }

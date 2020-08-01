@@ -3,7 +3,7 @@
 
 <Context>
 	<Resource
-		name="jdbc/tomcat_status" auth="Container" type="javax.sql.DataSource"
+		name="jdbc/tomcat_status" type="javax.sql.DataSource"
         driverClassName="com.mysql.cj.jdbc.Driver"	
         url="jdbc:mysql://localhost:3306/tomcat_status"
         username="user" password="Jsingh22."
