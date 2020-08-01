@@ -1,5 +1,7 @@
 package Task.ExecutorService;
 
+import Task.ThreadPool.Util;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -41,15 +43,15 @@ public class FileHandler implements Runnable {
     @Override
     public void run() {
         System.out.println("------------  " + Thread.currentThread().getName());
-        for (int i = this.getStartIndex(); i <= this.getEndIndex(); ++i) {
-            try {
-                FileWriter fw = new FileWriter(this.getFileName(),true);
+        try {
+            FileWriter fw = new FileWriter(this.getFileName(), true);
+            for (int i = this.getStartIndex(); i <= this.getEndIndex(); ++i) {
                 fw.write(i + "  " + Util.getRandomString() + "\n");
-                fw.close();
-            } catch(IOException ioe) {
-                System.out.println("An error occurred.");
-                ioe.printStackTrace();
             }
+            fw.close();
+        } catch (IOException ioe) {
+            System.out.println("An error occurred.");
+            ioe.printStackTrace();
         }
     }
 }
