@@ -16,7 +16,7 @@ import jersey.api.EmployeeApiImpl;
 import jersey.model.Employee;
 
 @Path("/v1/employees")
-public class EmployeeService {
+public class EmployeeController {
 
 	@GET
 	@Path("/")
@@ -28,7 +28,7 @@ public class EmployeeService {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map<String, String> getEmployee(@PathParam("id") long empId) {
+	public Map<String, String> getEmployee(@PathParam("id") long empId) {		
 		return EmployeeApiImpl.getInstance().getEmployeeDetails(empId);
 	}
 
