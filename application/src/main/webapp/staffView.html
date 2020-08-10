@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>StaffOperations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="staff.js"></script>
+</head>
+
+<body style="background-color:honeydew">
+
+    <h4 id="lbl" style="color: red; text-align: center;"></h4>
+    <h5 style="text-align:center"><b>Staff Operations</b></h5>
+    <div class="container text-center" style="padding-top:10px">
+        <button class="btn btn-primary" id="addmarkbtn" onclick="">Add Student Mark </button>
+        <button class="btn btn-primary" id="updatebtn">Update Student Mark </button>
+        <button class="btn btn-primary" id="subresbtn" onclick="getSubjectsResults()">Subjects Results</button>
+        <button class="btn btn-primary" id="staffresbtn" onclick="getStaffsResults()">Staffs Results</button>
+        <button class="btn btn-primary" id="deptresbtn" onclick="getDepartmentsResults()">Departments Results</button>
+        <button class="btn btn-danger" style="text-align:right; margin-left: 120px;" id="loutbtn"
+            onclick="logout()">Logout</button>
+    </div>
+
+    <div class="container text-center" style="padding-top:10px">
+
+        <div style="padding: 20px;display:none" id="hidedivid">
+            Enter StudentId : <input type="text" id="inputadd">
+            <button class="btn btn-primary" id="getsubjectbtn" onclick="getSubjects()">Get Subjects </button><br><br>
+            <div id="divid">
+
+            </div>
+        </div>
+
+        <div style="padding: 20px;display:none" id="update">
+            <input type="hidden" name="action" value="update" />
+            Student Id : <input type="text" id="stdId" />
+            Subject Id : <input type="text" id="subId" />
+            mark : <input type="text" id="mark" />
+            <button class="btn btn-primary" onclick="updateMark()">Update</button><br><br>
+        </div>
+
+        <table id="subtbl" class="table" style="width:50%;display:none">
+            <thead>
+                <tr>
+                    <th>Name </th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="subtblbdy">
+            </tbody>
+        </table>
+
+        <table id="tbl" class="table" style="width:50%;display:none">
+            <thead>
+                <tr>
+                    <th>Name </th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="tblbdy">
+            </tbody>
+        </table>
+
+        <table id="depttbl" class="table" style="width:50%;display:none">
+            <thead>
+                <tr>
+                    <th>Name </th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="depttblbdy">
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $('#updatebtn').click(function () {
+            $('#update').show();
+            $('#hidedivid').hide();
+            $('#subtbl').hide();
+            $('#tbl').hide();
+            $('#depttbl').hide();
+        });
+
+        $('#addmarkbtn').on('click', function () {
+            $('#hidedivid').show();
+            $('#update').hide();
+            $('#subtbl').hide();
+            $('#tbl').hide();
+            $('#depttbl').hide();
+            document.getElementById("divid").innerHTML = '';
+        });
+
+        $('#subresbtn').on('click', function () {
+            $('#hidedivid').hide();
+            $('#update').hide();
+            $('#subtbl').show();
+            $('#tbl').hide();
+            $('#depttbl').hide();
+        });
+
+        $('#staffresbtn').on('click', function () {
+            $('#hidedivid').hide();
+            $('#update').hide();
+            $('#subtbl').hide();
+            $('#tbl').show();
+            $('#depttbl').hide();
+        });
+
+        $('#deptresbtn').on('click', function () {
+            $('#hidedivid').hide();
+            $('#update').hide();
+            $('#subtbl').hide();
+            $('#tbl').hide();
+            $('#depttbl').show();
+        });
+
+    </script>
+</body>
+
+</html>

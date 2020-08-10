@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>StudentOperations</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>JSP Page</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="student.js"></script>
+</head>
+
+<body style="background-color: honeydew">
+
+	<div class="container text-right" style="margin-top: 25px;">
+		<button class="btn btn-danger" id="loutbtn" onclick="logout()">Logout</button>
+	</div>
+
+	<div class="container text-center" style="padding-top: 15px">
+		<button class="btn btn-primary" id="showbtn">Get Mark</button>
+		<br> <br>
+		<div style="padding: 20px; display: none" id="divbtn">
+			Enter StudentId : <input type="text" id="studentid" value="" />
+			<button class="btn btn-primary" id="btnsubmit" onclick="getResult()">Get
+				Result</button>
+			<br> <br>
+			<table id="tbl" class="table" style="padding-top: 50px; display: none">
+				<thead>
+					<th>Name</th>
+					<th>Department</th>
+					<tr>
+						<td id="lblname"></td>
+						<td id="lbldept"></td>
+					</tr>
+					<tr>
+						<th>Subject Name</th>
+						<th>Mark</th>
+					</tr>
+				</thead>
+				<tbody id="tblbdy">
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		$('#showbtn').click(function () {
+			$('#divbtn').show();
+		});
+
+		$('#btnsubmit').click(function () {
+			$('#tbl').show();
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>AdminOperations</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="admin.js"></script>
+</head>
+
+<body style="background-color: honeydew">
+	<h4 id="lbl" style="color: red; text-align: center;"></h4>
+	<div class="container" style="padding-top: 50px">
+		<button class="btn btn-primary btn-sm" style='margin-left: 16px' id="addDep">Add dept</button>
+		<button class="btn btn-primary btn-sm" id="addStaff" style='margin-left: 16px'>Add staff to subject</button>
+		<button class="btn btn-primary btn-sm" id="addstd">Add
+			Student</button>
+		<button class="btn btn-primary btn-sm" id="removestd">Remove
+			Student</button>
+		<button class="btn btn-primary btn-sm" id="getrslt">Get
+			Results</button>
+		<button class="btn btn-primary btn-sm" id="subres">Get
+			Subjects Highest Mark</button>
+		<button class="btn btn-primary btn-sm" id="rank">Get Nth Rank
+			Student</button>
+		<button class="btn btn-danger btn-sm" style="margin-left: 120px;" id="loutbtn"
+			onclick="logout()">Logout</button>
+	</div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="dep">
+		<select id="dept" required>
+			<option value="">select</option>
+			<option value="mech">mech</option>
+			<option value="civil">civil</option>
+			<option value="eee">eee</option>
+			<option value="ece">ece</option>
+			<option value="cse">cse</option>
+		</select>
+		<button class="btn btn-primary btn-sm" id="add">Add sub</button>
+
+		<div class="container text-center" style="padding-top: 50px;" id="subDiv"></div>
+	</div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="staff">
+		Enter staff Name : <input type="text" id="stf">
+		<button class="btn btn-primary btn-sm" onclick="showSubjects()">Add
+			sub</button>
+		<br>
+	</div>
+	<div class="container text-center" id="checkboxs"></div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="student">
+		Enter Name : <input type='text' id='studnt'>
+		<button class="btn btn-primary btn-sm" onclick="getDepartments()">Select
+			Department</button>
+		<select id='dropdown'>
+			<option value="">Choose</option>
+		</select><br> <br>
+		<button class="btn btn-primary btn-sm" onclick="addStudent()">Submit</button>
+		<br>
+	</div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="results">
+		<button class="btn btn-primary btn-sm" onclick="getResults()" id="allresult">Get All Results</button>
+		<button class="btn btn-primary btn-sm" onclick="" id="clgtop">Get
+			Collage Top Results</button>
+		<button class="btn btn-primary btn-sm" onclick="" id="depttop">Get
+			Department Top Results</button>
+		<table id="rslttbl" class="table" style="width: 50%; display: none">
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Name</th>
+					<th>Department</th>
+				</tr>
+			</thead>
+			<tbody id="rslttblbdy">
+			</tbody>
+		</table>
+
+		<div class="container text-center" style="padding-top: 50px; display: none" id="subresult">
+			Enter the max rank : <input type="text" id="limit">
+			<button class="btn btn-primary btn-sm" onclick="getCollegeTopResult()" id="top">Submit</button>
+			<table id="toptbl" class="table" style="width: 50%; display: none">
+				<thead>
+					<tr>
+						<th>Rank</th>
+						<th>Name</th>
+						<th>Department</th>
+					</tr>
+				</thead>
+				<tbody id="toptbdy">
+				</tbody>
+			</table>
+		</div>
+
+		<div class="container text-center" style="padding-top: 50px; display: none" id="topsubresult">
+			Enter the max rank : <input type="text" id="toplimit">
+			<button class="btn btn-primary btn-sm" onclick="getDepartmentsTopResults()" id="topdept">Submit</button>
+			<table id="toptdeptbl" class="table" style="width: 50%; display: none">
+				<thead>
+					<tr>
+						<th>Rank</th>
+						<th>Name</th>
+						<th>Department</th>
+					</tr>
+				</thead>
+				<tbody id="topdepttbdy">
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="highmark">
+		<table id="mark" class="table" style="width: 50%; display: none">
+			<h id="demo"></h>
+		</table>
+	</div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="divrank">
+		Enter the Rank : <input type="text" id="inputrank">
+		<button class="btn btn-primary btn-sm" onclick="getNthRankStudent()" id="btnrank">Submit</button>
+		<table id="ranktbl" class="table" style="width: 50%; display: none">
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Name</th>
+					<th>Department</th>
+				</tr>
+			</thead>
+			<tbody id="ranktbdy">
+			</tbody>
+		</table>
+	</div>
+
+	<div class="container text-center" style="padding-top: 50px; display: none" id="divremove">
+		Enter the StudentId : <input type="text" id="inputremove">
+		<button class="btn btn-primary btn-sm" onclick="removeStudent()" id="btnremove">Submit</button>
+
+	</div>
+
+</body>
+<script>
+	$(document)
+		.ready(
+			function () {
+				var count = 0;
+				$('#addSub').click(function () {
+					$('#staff').hide();
+					$('#sub').show();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#results').hide();
+					$('#highmark').hide();
+					$('#divremove').hide();
+				});
+
+				$('#addDep').click(function () {
+					document.getElementById("subDiv").innerHTML = '';
+					count = 0;
+					$('#dep').show();
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#results').hide();
+					$('#highmark').hide();
+					$('#divrank').hide();
+					$('#divremove').hide();
+				});
+
+				$('#add')
+					.click(
+						function () {
+							count++;
+							if (count < 6) {
+								$("#subDiv")
+									.append(
+										"Enter sub "
+										+ count
+										+ " : <input type='text' id='sub" + count + "'/><br><br>");
+								if (count == 5) {
+									$("#subDiv")
+										.append(
+											"<button onclick='addDepartment()'>Submit</button><br><br>");
+								}
+							} else {
+								alert("only 5 sub");
+							}
+						});
+
+				$('#addStaff')
+					.click(
+						function () {
+							document
+								.getElementById("checkboxs").innerHTML = '';
+							$('#dep').hide();
+							$('#staff').show();
+							$('#sub').hide();
+							$('#checkboxs').show();
+							$('#student').hide();
+							$('#results').hide();
+							$('#highmark').hide();
+							$('#divrank').hide();
+							$('#divremove').hide();
+						});
+
+				$('#addstd').click(function () {
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').show();
+					$('#results').hide();
+					$('#highmark').hide();
+					$('#divrank').hide();
+					$('#divremove').hide();
+				});
+
+				$('#getrslt').click(function () {
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#results').show();
+					$('#rslttbl').hide();
+					$('#subresult').hide();
+					$('#toptbl').hide();
+					$('#highmark').hide();
+					$('#divrank').hide();
+					$('#divremove').hide();
+				});
+
+				$('#results').click(function () {
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#highmark').hide();
+					$('#divremove').hide();
+				});
+
+				$('#clgtop').click(function () {
+					$('#rslttbl').hide();
+					$('#subresult').show();
+					$('#topsubresult').hide();
+					$('#highmark').hide();
+					$('#divremove').hide();
+				});
+
+				$('#depttop').click(function () {
+					$('#rslttbl').hide();
+					$('#subresult').hide();
+					$('#topsubresult').show();
+					$('#highmark').hide();
+					$('#divremove').hide();
+				});
+
+				$('#allresult').click(function () {
+					$('#rslttbl').show();
+					$('#subresult').hide();
+					$('#toptbl').hide();
+					$('#topsubresult').hide();
+					$('#highmark').hide();
+					$('#divremove').hide();
+				});
+
+				$('#top').click(function () {
+					$('#toptbl').show();
+					$('#toptdeptbl').hide();
+					$('#highmark').hide();
+				});
+
+				$('#topdept').click(function () {
+					$('#toptdeptbl').show();
+					$('#toptbl').hide();
+					$('#highmark').hide();
+				});
+
+				$('#subres').click(function () {
+					getSubjectsHighestMark();
+					$('#highmark').show();
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#results').hide();
+					$('#divrank').hide();
+					$('#divremove').hide();
+				});
+
+				$('#rank').click(function () {
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#results').hide();
+					$('#highmark').hide();
+					$('#divremove').hide();
+					$('#divrank').show();
+					$('#ranktbl').hide();
+				});
+
+				$('#btnrank').click(function () {
+					$('#ranktbl').show();
+				});
+
+				$('#removestd').click(function () {
+					$('#staff').hide();
+					$('#sub').hide();
+					$('#dep').hide();
+					$('#checkboxs').hide();
+					$('#student').hide();
+					$('#results').hide();
+					$('#highmark').hide();
+					$('#divremove').hide();
+					$('#divrank').hide();
+					$('#ranktbl').hide();
+					$('#divremove').show();
+					$('#removetbl').hide();
+				});
+
+				$('#btnremove').click(function () {
+					$('#removetbl').show();
+				});
+			});
+</script>
+
+</html>
