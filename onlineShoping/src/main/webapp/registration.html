@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>User Registration</title>
+	<script type="text/javascript" src="user.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<h4 id="lbl" style="color: red; text-align: center;"></h4>
+	<div class="container text-center" style="padding-top:150px">
+		<h4>Staff Login</h4><br>
+		<form action = "userIndex.html" onsubmit= 'return register()'>
+			Enter username : <input type="text" id="inputuser" /><br> <br>
+			Enter email : <input type="email" id="inputemail" /><br> <br>
+			Enter contact number : <input type="number" id="inputcon" onkeypress="return isNumberKey(event)"/><br> <br>
+			Enter password : <input type="password" id="pwd" /><br> <br>
+			Enter re-enter : <input type="password" id="repwd" /><br> <br>
+			<!-- <button class="btn btn-primary btn-m" onclick="register()">login</button><br><br> -->
+			<input type="submit" id = "sbmit"/>
+		</form>
+	</div>
+</body>
+</html>

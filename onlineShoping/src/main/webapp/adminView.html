@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>AdminOperations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="admin.js"></script>
+</head>
+
+<body style="background-color: honeydew">
+    <h4 id="lbl" style="color: red; text-align: center;"></h4>
+
+    <div class="container" style="padding-top: 50px">
+        <button class="btn btn-primary btn-sm" style='margin-left: 16px' id="getProd" onclick='getAllProduct()'>Get All
+            Product</button>
+        <button class="btn btn-primary btn-sm" id="getprodbyid" style='margin-left: 16px'>Get
+            Product by Id</button>
+        <button class="btn btn-primary btn-sm" id="addprod">Add Product</button>
+        <button class="btn btn-primary btn-sm" id="updateprod" onclick='updateProduct()'>Update Product</button>
+        <button class="btn btn-primary btn-sm" id="removeprod">Remove Product</button>
+    </div>
+
+    <div class="container" id="getprodbyiddiv" style="padding-top: 10px; display: none;">
+        Enter Product Id : <input id="inputprodid" type="text" required /><br><br>
+        <button type="submit" id="btngetprodid" style="margin-left: 150px;" onclick="getProductById()">Submit</button>
+    </div>
+    <div class="container" style="padding-top: 50px">
+        <table id="producttable" class="table" style="width: 50%;display: none;">
+            <thead>
+                <tr>
+                    <th>ProductId</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody id="producttbdy">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="updatediv" class="container" style="padding-top: 50px; display: none;">
+        <table id="updatetable" class="table" style="width: 50%;">
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>ProductId</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="updatetbdy">
+            </tbody>
+        </table>
+        <button type="submit" style="margin-left: 150px; text-align: right;" onclick="update()">Update</button>
+    </div>
+
+    <div class="container" id="adddiv" style="padding-top: 10px; display: none;">
+        Product Name : <input id="inputname" type="text" required /><br><br>
+        Brand : <input id="inputbrand" type="text" required /> <br><br>
+        Description : <input id="inputdes" type="text" required /><br><br>
+        Price : <input id="inputprice" type="text" required /><br><br>
+        Quantity : <input id="inputqty" type="text" required /><br><br>
+        <button type="submit" style="margin-left: 150px;" onclick="addProduct()">Submit</button>
+    </div>
+
+    <div class="container" id="updtdiv" style="padding-top: 10px; display: none;">
+        Priduct Id : <input id="inputid" type="text" required /><br><br>
+        Quantity : <input id="inputqunatity" type="text" required /><br><br>
+        <button type="submit" style="margin-left: 150px;" id="btnuptdbtn" onclick="updateProduct()">Submit</button>
+    </div>
+
+    <div class="container" id="dropdowndiv" style="padding-top: 10px; display: none;">
+        <button class="btn btn-primary btn-sm" onclick="getAll()">Select
+            Product</button>
+        <select id='dropdown'>
+            <option value="">Choose Product</option>
+        </select><br> <br>
+        <button class="btn btn-primary btn-sm" onclick="removeProduct()">Submit</button>
+    </div>
+</body>
+<script>
+    $('#getProd').click(function () {
+        $('#producttable').show();
+        $('#adddiv').hide();
+        $('#updtdiv').hide();
+        $('#dropdowndiv').hide();
+        $('#getprodbyiddiv').hide();
+        $('#updatediv').hide();
+    });
+    $('#addprod').click(function () {
+        $('#adddiv').show();
+        $('#producttable').hide();
+        $('#updtdiv').hide();
+        $('#dropdowndiv').hide();
+        $('#getprodbyiddiv').hide();
+        $('#updatediv').hide();
+    });
+
+    $('#updateprod').click(function () {
+        $('#adddiv').hide();
+        $('#producttable').hide();
+        $('#updtdiv').hide();
+        $('#dropdowndiv').hide();
+        $('#getprodbyiddiv').hide();
+        $('#updatediv').show();
+    });
+
+    $('#removeprod').click(function () {
+        $('#updtdiv').hide();
+        $('#producttable').hide();
+        $('#adddiv').hide();
+        $('#dropdowndiv').show();
+        $('#getprodbyiddiv').hide();
+        $('#updatediv').hide();
+    });
+
+    $('#getprodbyid').click(function () {
+        $('#updtdiv').hide();
+        $('#producttable').hide();
+        $('#adddiv').hide();
+        $('#dropdowndiv').hide();
+        $('#getprodbyiddiv').show();
+        $('#updatediv').hide();
+        // $('#producttable').show();
+    });
+    $('#btngetprodid').click(function () {
+        $('#producttable').show();
+    });
+
+    $('#btnuptdbtn').click(function () {
+        $('#producttable').show();
+    });
+</script>
+
+</html>

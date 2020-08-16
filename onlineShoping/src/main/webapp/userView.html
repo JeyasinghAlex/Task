@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>User Operations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="user.js"></script>
+</head>
+
+<body style="background-color: honeydew">
+    <h4 id="lbl" style="color: red; text-align: center;"></h4>
+
+    <div class="container" style="padding-top: 50px">
+        <button class="btn btn-primary btn-sm" style='margin-left: 16px' id="getProd" onclick='getAllProduct()'>Get All
+            Product</button>
+        <button class="btn btn-primary btn-sm" id="showcart" onclick='showCart()'>Show Cart</button>
+        <button class="btn btn-primary btn-sm" id="updatecart" onclick='updateCart()'>Update Cart</button>
+        <button class="btn btn-primary btn-sm" id="removecart" onclick='removeCart()'>Remove from Product</button>
+    </div>
+
+    <div id="tblediv" class="container" style="padding-top: 50px; display: none;">
+        <table id="producttable" class="table" style="width: 50%;">
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="producttbdy">
+            </tbody>
+        </table>
+        <button type="submit" style="margin-left: 150px; text-align: right;" onclick="addCart()">Add to cart</button>
+    </div>
+
+    <div div id="showdiv" class="container" style="padding-top: 50px; display: none;">
+        <table id="carttable" class="table" style="width: 50%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="showcarttbdy">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="updatediv" class="container" style="padding-top: 50px; display: none;">
+        <table id="updatetable" class="table" style="width: 50%;">
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="updatetbdy">
+            </tbody>
+        </table>
+        <button type="submit" style="margin-left: 150px; text-align: right;" onclick="update()">Update</button>
+    </div>
+
+    <div id="removediv" class="container" style="padding-top: 50px; display: none;">
+        <table id="removetable" class="table" style="width: 50%;">
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="removetbdy">
+            </tbody>
+        </table>
+        <button type="submit" style="margin-left: 150px; text-align: right;" onclick="remove()">Remove</button>
+    </div>
+
+    <div class="container" id="updtdiv" style="padding-top: 10px; display: none;">
+        Priduct Id : <input id="inputid" type="text" required /><br><br>
+        Quantity : <input id="inputqunatity" type="text" required /><br><br>
+        <button type="submit" style="margin-left: 150px;" id="btnuptdbtn" onclick="updateProduct()">Submit</button>
+    </div>
+
+    <div class="container" id="dropdowndiv" style="padding-top: 10px; display: none;">
+        <button class="btn btn-primary btn-sm" onclick="getAll()">Select
+            Product</button>
+        <select id='dropdown'>
+            <option value="">Choose Product</option>
+        </select><br> <br>
+        <button class="btn btn-primary btn-sm" onclick="removeProduct()">Submit</button>
+    </div>
+</body>
+
+<script>
+    $('#getProd').click(function () {
+        $('#tblediv').show();
+        $('#showdiv').hide();
+        $('#updatediv').hide();
+        $('#removediv').hide();
+    });
+
+    $('#showcart').click(function () {
+        $('#showdiv').show();
+        $('#tblediv').hide();
+        $('#updatediv').hide();
+        $('#removediv').hide();
+    });
+
+    $('#updatecart').click(function () {
+        $('#updatediv').show();
+        $('#showdiv').hide();
+        $('#tblediv').hide();
+        $('#removediv').hide();
+    });
+
+    $('#removecart').click(function () {
+        $('#updatediv').show();
+        $('#showdiv').hide();
+        $('#tblediv').hide();
+        $('#removediv').hide();
+    });
+
+    $('#removecart').click(function () {
+        $('#removediv').show();
+        $('#updatediv').hide();
+        $('#showdiv').hide();
+        $('#tblediv').hide();
+    });
+
+</script>
+
+</html>
