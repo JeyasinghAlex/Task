@@ -20,6 +20,7 @@ import com.applicaton.service.ProductServiceImpl;
 import com.applicaton.util.RestError;
 import com.applicaton.util.RestSuccess;
 
+@Secured
 @Path("/v1/product")
 public class ProductController {
 
@@ -75,7 +76,7 @@ public class ProductController {
 		}
 		return RestSuccess.successResponse(updatedProduct);
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)

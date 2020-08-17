@@ -9,6 +9,8 @@ import com.applicaton.dao.ProductDao;
 import com.applicaton.dao.ProductDaoImpl;
 import com.applicaton.model.Cart;
 import com.applicaton.model.Product;
+import com.applicaton.model.User;
+import com.applicaton.util.UserHandler;
 
 public class CartServiceImpl implements CartService {
 
@@ -26,15 +28,16 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public boolean saveCart(int userId, Product product) {
+	public boolean saveCart(Product product) {
 		CartDao dao = CartDaoImpl.getInstance();
+		User user = UserHandler.getUser();
+		int userId = user.getId();
 		ProductService service = ProductServiceImpl.getInstance();
 		Product product1 = service.findProductById(product.getId());
 		try {
 			int isAdd = dao.add(userId, product);
 			if (isAdd != 0) {
 				int quantity = product1.getQuantity() - product.getQuantity();
-				System.out.println("------------  "+quantity);
 				product1.setQuantity(quantity);
 				service.updateProduct(product1);
 				return true;
@@ -45,8 +48,10 @@ public class CartServiceImpl implements CartService {
 		return false;
 	}
 
-	public Cart getCart(int userId) {
+	public Cart getCart() {
 		Cart cart = new Cart();
+		User user = UserHandler.getUser();
+		int userId = user.getId();
 		try {
 			ResultSet rs = CartDaoImpl.getInstance().getAll(userId);
 			while (rs.next()) {
@@ -65,12 +70,13 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public boolean updateCart(int userId, Product product) {
-		System.out.println("I am updated cart");
+	public boolean updateCart(Product product) {
 		int cartQuantity = 0;
 		CartDao cart = CartDaoImpl.getInstance();
+		User user = UserHandler.getUser();
+		int userId = user.getId();
+
 		try {
-			System.out.println(product.getId() + " " + product.getQuantity());
 			ResultSet rs = cart.get(userId, product.getId());
 			if (rs.next()) {
 				cartQuantity = rs.getInt(3);
@@ -102,11 +108,14 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public boolean removeCartProduct(int userId, Product product) {
+	public boolean removeCartProduct(Product product) {
 		CartDao dao = CartDaoImpl.getInstance();
+		User user = UserHandler.getUser();
+		int userId = user.getId();
+
 		ProductDao productDao = ProductDaoImpl.getInstance();
 		try {
-			ResultSet rs  = dao.get(userId, product.getId());
+			ResultSet rs = dao.get(userId, product.getId());
 			if (rs.next()) {
 				int quantity = rs.getInt(3);
 				product.setQuantity(quantity);

@@ -5,11 +5,11 @@ import com.applicaton.model.Product;
 
 public interface CartService {
 	
-	Cart getCart(int studentId);
+	Cart getCart();
 	
-	boolean saveCart(int userId, Product product);
+	boolean saveCart(Product product);
 
-	boolean updateCart(int userId, Product product);
+	boolean updateCart(Product product);
 
-	boolean removeCartProduct(int userId, Product product);
+	boolean removeCartProduct(Product product);
 }

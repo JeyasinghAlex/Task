@@ -6,7 +6,7 @@ public interface UserService {
 
 	boolean saveUser(User user);
 
-	boolean findUserByEmail(String email);
+	User findUserByEmail(String email);
 	
 	 boolean registration(User user);
 }

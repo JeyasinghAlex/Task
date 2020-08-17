@@ -14,7 +14,7 @@ public class User {
 	private String contactNumber;
 
 	private String password;
-	
+
 	private transient String confirmPassword;
 
 	private Cart cart;
@@ -75,9 +75,4 @@ public class User {
 		this.cart = cart;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", contactNumber=" + contactNumber
-				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", cart=" + cart + "]";
-	}
 }

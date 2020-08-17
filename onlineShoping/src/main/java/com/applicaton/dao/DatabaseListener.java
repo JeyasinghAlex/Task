@@ -9,12 +9,12 @@ public class DatabaseListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent context) {
-//		try {
-//			DatabaseImpl.getInstance().initializeDatabase();
-//		} catch (ClassNotFoundException | SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			AdminDaoImpl.getInstance().initializeDatabase();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

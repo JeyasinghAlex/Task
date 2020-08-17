@@ -121,7 +121,6 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product updateProduct(Product product) {
-		System.out.println("i am product service update -> " + product.getQuantity());
 		ProductDao dao = ProductDaoImpl.getInstance();
 		try {
 			int isUpdate = dao.update(product);
@@ -136,7 +135,6 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product update(Product product) {
-		System.out.println("i am product service update -> " + product.getQuantity());
 		ProductDao dao = ProductDaoImpl.getInstance();
 		try {
 			int isUpdate = dao.updateProduct(product);
@@ -146,12 +144,6 @@ public class ProductServiceImpl implements ProductService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
-	}
-	
-	@Override
-	public Product findProductByIdForAdmin(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

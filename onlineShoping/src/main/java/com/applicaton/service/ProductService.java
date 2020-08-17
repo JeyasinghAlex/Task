@@ -9,7 +9,7 @@ public interface ProductService {
 	boolean saveProduct(Product product);
 
 	List<Product> findAllProducts();
-	
+
 	List<Product> findAllProductsForAdmin();
 
 	Product findProductById(int id);
@@ -18,7 +18,5 @@ public interface ProductService {
 
 	Product updateProduct(Product product);
 
-	Product findProductByIdForAdmin(int id);
-	
 	Product update(Product product);
 }

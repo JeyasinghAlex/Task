@@ -1,0 +1,9 @@
+.container {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.login-form {
+  border: 3px solid green;
+  padding: 20px;
+}

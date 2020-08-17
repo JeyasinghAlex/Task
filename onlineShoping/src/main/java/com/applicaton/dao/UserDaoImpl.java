@@ -78,7 +78,7 @@ public class UserDaoImpl implements UserDao {
 		Properties properties = ConfigUtil.loadProperty();
 		String query = properties.getProperty("psql.query.get_userby_mail");
 		PreparedStatement pstmt = DbConnection.getInstance().getConnection().prepareStatement(query);
-		pstmt.setString(2, mail);
+		pstmt.setString(1, mail);
 		return pstmt.executeQuery();
 	}
 }

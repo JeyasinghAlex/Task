@@ -15,7 +15,7 @@ import com.applicaton.util.RestSuccess;
 
 @Path("/v1/registration")
 public class RegistrationController {
-	
+
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)

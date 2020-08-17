@@ -25,7 +25,6 @@ public class CartDaoImpl implements CartDao {
 
 	@Override
 	public ResultSet get(int userId, int productId) throws SQLException {
-		System.out.println(" i am get method");
 		Properties properties = ConfigUtil.loadProperty();
 		String query = properties.getProperty("psql.query.get_cart_product");
 		PreparedStatement pstmt = DbConnection.getInstance().getConnection().prepareStatement(query);
@@ -50,11 +49,9 @@ public class CartDaoImpl implements CartDao {
 		Product product = new Product();
 		product.setId(prod.getId());
 		product.setQuantity(prod.getQuantity());
-		System.out.println("++++++++++++++++++++  -> "+product.getQuantity());
 		Properties properties = ConfigUtil.loadProperty();
 		ResultSet rs = get(cartId, product.getId());
 		if (rs.next()) {
-			System.out.println("i am inside if condition");
 			int quantity = rs.getInt(3) + prod.getQuantity();
 			product.setQuantity(quantity);
 			return update(userId, product);
@@ -64,18 +61,8 @@ public class CartDaoImpl implements CartDao {
 		pstmt.setInt(1, cartId);
 		pstmt.setInt(2, product.getId());
 		pstmt.setInt(3, product.getQuantity());
-		System.out.println("finish");
 		return pstmt.executeUpdate();
 	}
-
-//	private ResultSet isProductAvailable(int cartId, Product product) throws SQLException {
-//		Properties properties = ConfigUtil.loadProperty();
-//		String query = properties.getProperty("psql.query.is_product_available");
-//		PreparedStatement pstmt = DbConnection.getInstance().getConnection().prepareStatement(query);
-//		pstmt.setInt(1, cartId);
-//		pstmt.setInt(2, product.getId());
-//		return pstmt.executeQuery();
-//	}
 
 	private int getCartId(int userId) throws SQLException {
 		Properties properties = ConfigUtil.loadProperty();
@@ -100,19 +87,6 @@ public class CartDaoImpl implements CartDao {
 		pstmt.setInt(2, cartId);
 		pstmt.setInt(3, product.getId());
 		return pstmt.executeUpdate();
-	}
-
-	@Override
-	public ResultSet getProduct(int userId, Product product) throws SQLException {
-//		int cartId = getCartId(userId);
-//		Properties properties = ConfigUtil.loadProperty();
-//		String query = properties.getProperty("psql.query.update_cart");
-//		PreparedStatement pstmt = DbConnection.getInstance().getConnection().prepareStatement(query);
-//		pstmt.setInt(1, product.getQuantity());
-//		pstmt.setInt(2, cartId);
-//		pstmt.setInt(3, product.getId());
-//		return pstmt.executeQuery();
-		return null;
 	}
 
 	@Override

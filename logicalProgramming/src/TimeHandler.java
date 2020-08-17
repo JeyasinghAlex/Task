@@ -1,4 +1,3 @@
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,79 +34,37 @@ public class TimeHandler {
     }
 
     public String splitByColon(String time) {
-        String hours = "";
-        String mins = "";
+        int minutes = 0;
         String[] arr = time.split(":");
-        if (!arr[0].isEmpty() && !isValid(arr[0])) {
-            return "Invalid hours";
-        }
         if (!arr[0].isEmpty()) {
-            hours += getTime(arr[0]);
+            minutes += Integer.parseInt(arr[0]) * 60;
         }
         if (!arr[1].isEmpty()) {
-            mins += getTime(arr[1]);
+            minutes += Integer.parseInt(arr[1]);
         }
-        if (hours.isEmpty() && mins.isEmpty()) {
-            return "Invalid hours";
-        }
-        return getResult(hours, mins);
+        return getResult(minutes);
     }
 
     public String splitByDot(String time) {
-        String hours = "";
-        String mins = "";
-        String[] arr = time.split("\\.");
-        if (!arr[0].isEmpty() && !isValid(arr[0])) {
-            return "Invalid hours";
+        int minutes = 0;
+        float ti = Float.parseFloat(time);
+        minutes = (int) (ti * 60);
+        return getResult(minutes);
+    }
+
+    private String getResult(int minutes) {
+        int m = minutes % 60;
+        int h = minutes / 60;
+        if (h >= 24) {
+            return "Invalid Time";
         }
-        if (!arr[0].isEmpty()) {
-            hours += getTime(arr[0]);
-        }
-        if (!arr[1].isEmpty()) {
-            float a = Float.parseFloat("0." + arr[1]) * 60;
-            String str = (int) a + "";
-            mins += getTime(str);
-        }
-        if (hours.isEmpty() && mins.isEmpty()) {
-            return " Invalid hours";
-        }
+        String hours = getTime(h);
+        String mins = getTime(m);
         return getResult(hours, mins);
     }
 
-    private String getResult(String hours, String mins) {
-        String ans = "";
-        if (!hours.isEmpty()) {
-            ans = hours + " hours";
-        }
-        if (!mins.isEmpty()) {
-            ans = mins + " mins";
-        }
-        if (!hours.isEmpty() && !mins.isEmpty()) {
-            ans = hours + " hours and " + mins + " mins";
-        }
-        return ans;
-    }
-
-    public String getHours(String time) {
-        String ans = "";
-        ans = getTime(time);
-        if (!ans.isEmpty() && !isValid(time)) {
-            return "Invalid Time";
-        }
-        return getTime(time) + " hours";
-    }
-
-    private boolean isValid(String time) {
-        int num = Integer.parseInt(time);
-        if (num >= 24) {
-            return false;
-        }
-        return true;
-    }
-
-    private String getTime(String time) {
+    private String getTime(int num) {
         String t = "";
-        int num = Integer.parseInt(time);
         if (num == 0) {
             return "";
         }
@@ -121,5 +78,16 @@ public class TimeHandler {
             t += map.get(a);
         }
         return t;
+    }
+
+    private String getResult(String hours, String mins) {
+        if (!hours.isEmpty() && !mins.isEmpty()) {
+            return hours + " hours and " + mins + " mins";
+        } else if (!hours.isEmpty()) {
+            return hours + " hours";
+        } else if (!mins.isEmpty()) {
+            return mins + " mints";
+        }
+        return "Invalid Time";
     }
 }

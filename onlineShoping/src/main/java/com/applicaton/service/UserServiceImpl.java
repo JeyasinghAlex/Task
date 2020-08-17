@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return instance;
 	}
-	
+
 	@Override
 	public boolean registration(User user) {
 		UserDao dao = UserDaoImpl.getInstance();
@@ -67,19 +67,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean findUserByEmail(String email) {
+	public User findUserByEmail(String email) {
 		UserDao dao = UserDaoImpl.getInstance();
+		User user = new User();
 		try {
 			ResultSet rs = dao.findUserByMail(email);
 			if (rs.next()) {
-				return true;
+				user.setId(rs.getInt(1));
+				user.setEmail(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				return user;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 }

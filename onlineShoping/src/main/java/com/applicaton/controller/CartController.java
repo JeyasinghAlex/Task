@@ -25,6 +25,7 @@ import com.applicaton.service.UserService;
 import com.applicaton.service.UserServiceImpl;
 import com.applicaton.util.RestError;
 import com.applicaton.util.RestSuccess;
+import com.applicaton.util.UserHandler;
 
 @Secured
 @Path("/v1/user")
@@ -44,12 +45,13 @@ public class CartController {
 	}
 
 	@GET
-	@Path("/{id}/products")
+	@Path("/cart/products")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response showCart(@PathParam("id") int userId) {
+	public Response showCart() {
+
 		CartService service = CartServiceImpl.getInstance();
-		Cart cart = service.getCart(userId);
+		Cart cart = service.getCart();
 		if (cart.getProducts().isEmpty()) {
 			return RestError.errorResponse("status", "No Product Found", 200);
 		}
@@ -57,17 +59,17 @@ public class CartController {
 	}
 
 	@POST
-	@Path("/{id}/product")
+	@Path("/product")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCart(@PathParam("id") int userId, Product product) {
+	public Response addCart(Product product) {
+
 		CartService service = CartServiceImpl.getInstance();
 		Product product1 = ProductServiceImpl.getInstance().findProductById(product.getId());
-		System.out.println(product1.getQuantity() + " " + product.getQuantity());
 		if (product.getQuantity() > product1.getQuantity()) {
 			return RestError.errorResponse("status", "Product is insufficient", 200);
 		}
-		boolean isAdded = service.saveCart(userId, product);
+		boolean isAdded = service.saveCart(product);
 		if (!isAdded) {
 			return RestError.errorResponse();
 		}
@@ -75,13 +77,13 @@ public class CartController {
 	}
 
 	@PUT
-	@Path("/{id}/product")
+	@Path("/product")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateCart(@PathParam("id") int userId, Product product) {
-		System.out.println("i am update");
+	public Response updateCart(Product product) {
+
 		CartService service = CartServiceImpl.getInstance();
-		boolean isUpdated = service.updateCart(userId, product);
+		boolean isUpdated = service.updateCart(product);
 		if (!isUpdated) {
 			return RestError.errorResponse();
 		}
@@ -89,12 +91,13 @@ public class CartController {
 	}
 
 	@DELETE
-	@Path("/{id}/product")
+	@Path("/product")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeCart(@PathParam("id") int userId, Product product) {
+	public Response removeCart(Product product) {
+
 		CartService service = CartServiceImpl.getInstance();
-		boolean isDeleted = service.removeCartProduct(userId, product);
+		boolean isDeleted = service.removeCartProduct(product);
 		if (!isDeleted) {
 			return RestError.errorResponse();
 		}
